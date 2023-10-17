@@ -5,7 +5,7 @@ const useStyles = makeStyles({
     homepage: {
         backgroundColor: 'rgb(80, 77, 77)',
         width: '100vw',
-        // height: '100vh',
+        height: '100vh',
         direction: 'rtl',
         display: 'flex',
         flexDirection: 'column',

@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles'
 const useStyles = makeStyles({
 
     playline: {
-        height: '25vh',
+        height: '15vh',
         width: '100vw',
         backgroundColor: 'rgb(112, 106, 106)',
         // position: 'absolute',

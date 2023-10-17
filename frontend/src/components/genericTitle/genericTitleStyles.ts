@@ -12,7 +12,8 @@ const useStyles = makeStyles({
         },
         backgroundColor: 'rgb(74, 191, 117)',
         borderRadius: '15px',
-        width: '80vw',
+        width: '75vw',
+
     }
 });
 
