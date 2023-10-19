@@ -51,7 +51,7 @@ const useStyles = makeStyles({
         backgroundColor: 'rgb(112, 106, 106)',
         // maxHeight: '600px',
         maxHeight: '40vh',
-        width: '80vw',
+        width: '75vw',
         borderRadius: '15px',
         display: 'flex',
         flexDirection: 'column'
