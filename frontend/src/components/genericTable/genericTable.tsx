@@ -36,7 +36,7 @@ const GenericTable: React.FC<props> = ({ songs }) => {
             field: 'song',
             headerName: SONG,
             headerClassName: classes.songsTable,
-            width: 450
+            width: 350
         },
         {
             field: 'artist',
@@ -48,7 +48,7 @@ const GenericTable: React.FC<props> = ({ songs }) => {
             field: 'duration',
             headerName: DURATION,
             headerClassName: classes.songsTable,
-            width: 150,
+            width: 120,
         },
         {
             field: 'addToPlaylist',
