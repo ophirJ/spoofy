@@ -20,7 +20,8 @@ const useStyles = makeStyles({
             border: 0,
             '&>.MuiDataGrid-main': {
                 width: '90%',
-            }
+            },
+            
         },
         '&.MuiDataGrid-row Mui-selected': {
             backgroundColor: 'rgb(129, 129, 129)'
@@ -36,7 +37,7 @@ const useStyles = makeStyles({
         },
         "&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus": {
             outline: 'none'
-        },
+        },  
 
     },
 

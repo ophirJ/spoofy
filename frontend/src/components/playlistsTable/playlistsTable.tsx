@@ -20,7 +20,6 @@ const PlaylistsTable: React.FC = () => {
     const classes = useStyles();
     const [playlists, setPlaylists] = useState<Playlist[]>([]);
     const currentUser = useAppSelector(state => state.currentUser);
-    // const [songsList, setSongsList] = useState<Song[]>([]);
 
     useQuery(GET_ALL_PLAYLISTS_BY_USER, {
         variables: {
@@ -52,7 +51,7 @@ const PlaylistsTable: React.FC = () => {
         <div className={classes.playlitsPage}>
             <GenericTitle text={PLAYLISTS} />
             {playlists.map(playlist =>
-                <div>
+                <div key={playlist.id}>
                     <div className={classes.playlistTitle}>
                         <Typography className={classes.playlistName}>{playlist.name}</Typography>
                         <IconButton>

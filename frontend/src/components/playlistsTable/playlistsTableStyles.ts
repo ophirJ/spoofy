@@ -6,7 +6,7 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         gap: '30px',
-        alignItems: 'center'
+        alignItems: 'center',
     },
 
     playlistName: {

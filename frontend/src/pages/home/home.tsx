@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useQuery } from '@apollo/client';
 
 import TopBar from "../../components/topBar/topBar";
@@ -11,7 +11,7 @@ import { useAppSelector } from "../../redux/hooks";
 import Playline from "../../components/playline/playline";
 import { songsContext } from "../../components/context/songsContext";
 import { Song } from "../../types/song";
-import { GET_ALL_SONGS, GET_FAVORITES_ID_BY_USER } from "../../db/songs/queries";
+import { GET_ALL_SONGS } from "../../db/songs/queries";
 
 const Home: React.FC = () => {
 
@@ -25,25 +25,7 @@ const Home: React.FC = () => {
     const currentTableMode = useAppSelector(state => state.currentTableMode.currentTableMode);
     const playingSong = useAppSelector(state => state.playingSong.song);
     const [songs, setSongs] = useState<Song[]>([]);
-    const [favoritesIds, setFavoritesIds] = useState<string[]>([]);
     const currentUser = useAppSelector(state => state.currentUser);
-
-    // useQuery(GET_FAVORITES_ID_BY_USER, {
-    //     variables: { 'userId': currentUser.id },
-    //     onCompleted: (data) => {
-    //         const allFavorites = data.allFavorites.nodes;
-    //         allFavorites.map((favorite: { songBySongId: { id: string; }; }) => {
-    //             setFavoritesIds(prev => [...prev, favorite.songBySongId.id]);
-    //         });
-    //     }
-    // });
-
-    // const isSongFavorite = (id: string) => {
-    //     if (favoritesIds.find(favorite => favorite == id)) {
-    //         return true
-    //     };
-    //     return false;
-    // };
 
     useQuery(GET_ALL_SONGS, {
         variables: { 'userId': currentUser.id },
@@ -59,9 +41,6 @@ const Home: React.FC = () => {
             )
         }
     });
-
-
-
 
     return (
         <songsContext.Provider value={{ songs, setSongs }}>
