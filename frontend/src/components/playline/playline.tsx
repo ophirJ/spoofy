@@ -18,7 +18,7 @@ const Playline: React.FC = () => {
 
     const classes = useStyles();
     const dispatch = useAppDispatch();
-    const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const [isPlaying, setIsPlaying] = useState<boolean>(true);
     const [songDuration, setSongDuration] = useState<number>(0);
     const playingSong = useAppSelector(state => state.playingSong.song);
     const { songs } = useContext(songsContext);
