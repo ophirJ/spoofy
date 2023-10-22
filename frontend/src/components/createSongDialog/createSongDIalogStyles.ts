@@ -28,7 +28,7 @@ const useStyles = makeStyles({
             gap: '20px',
             borderRadius: '15px',
             maxWidth: '1100px',
-            minHeight: '600px'
+            minHeight: '500px'
         }
 
     },
