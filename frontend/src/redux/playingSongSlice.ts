@@ -23,9 +23,13 @@ export const playingSongSlice = createSlice({
         },
         setSelectionModel: (state, action: PayloadAction<GridRowId[]>) => {
             state.selectionModel = action.payload;
+        },
+        resetSong: (state) => {
+            state.selectionModel = [];
+            state.song = undefined;
         }
     }
 })
 
-export const { setSong, setSelectionModel } = playingSongSlice.actions;
+export const { setSong, setSelectionModel, resetSong } = playingSongSlice.actions;
 export default playingSongSlice.reducer;

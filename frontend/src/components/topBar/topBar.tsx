@@ -7,6 +7,7 @@ import useStyles from './topBarStyles';
 import DeleteAccountDialog from '../deleteAccountDialog/deleteAccountDialog';
 import { useAppSelector, useAppDispatch } from '../../redux/hooks';
 import { resetUser } from '../../redux/currentUserSlice';
+import { resetSong } from '../../redux/playingSongSlice';
 
 const LOGOUT = 'התנתקות';
 const LOGIN_PATH = '/'
@@ -18,6 +19,11 @@ const TopBar: React.FC = () => {
   const currentUser = useAppSelector(state => state.currentUser);
   const dispatch = useAppDispatch();
 
+  const logOut = () => {
+    dispatch(resetUser());
+    dispatch(resetSong());
+  };
+
   return (
     <div className={classes.topBar}>
       <img src={logo} className={classes.musifyLogo} />
@@ -27,7 +33,7 @@ const TopBar: React.FC = () => {
           <Link to={LOGIN_PATH} className={classes.linkToLogin}>
             <Button 
               className={classes.logoutBtn}
-              onClick={() => dispatch(resetUser())}
+              onClick={logOut}
             >
               {LOGOUT}
             </Button>
