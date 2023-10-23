@@ -9,18 +9,17 @@ import { songsContext } from '../context/songsContext';
 const SONG_LIST = 'רשימת שירים';
 
 const SongsTable: React.FC = () => {
+  const { songs } = useContext(songsContext);
 
-    const {songs} = useContext(songsContext);
+  const classes = useStyles();
 
-    const classes = useStyles();
-
-    return (
-        <div className={classes.songsPage}>
-            <GenericTitle text={SONG_LIST} />
-            <GenericTable songs={songs}/>
-            <CreateSongDialog/>
-        </div>
-    );
+  return (
+    <div className={classes.songsPage}>
+      <GenericTitle text={SONG_LIST} />
+      <GenericTable songs={songs} />
+      <CreateSongDialog />
+    </div>
+  );
 };
 
 export default SongsTable;

@@ -1,43 +1,42 @@
-import { makeStyles } from '@mui/styles'
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
+  menu: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '15px',
+    paddingRight: '15px',
+  },
 
-    menu: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '15px',
-        paddingRight: '15px'
+  menuItem: {
+    '&.MuiButton-root': {
+      '&:hover': {
+        backgroundColor: 'rgb(191, 177, 177)',
+      },
+      backgroundColor: 'rgb(191, 177, 177)',
+      width: '200px',
+      color: 'white',
+      fontFamily: 'system-ui',
+      fontSize: '20px',
+      height: '30px',
+      alignItems: 'center',
     },
+  },
 
-    menuItem: {
-        '&.MuiButton-root': {
-            '&:hover': {
-                backgroundColor: 'rgb(191, 177, 177)'
-            },
-            backgroundColor: 'rgb(191, 177, 177)',
-            width: '200px',
-            color: 'white',
-            fontFamily: 'system-ui',
-            fontSize: '20px',
-            height: '30px',
-            alignItems: 'center'
-        }
+  selectedMenuItem: {
+    '&.MuiButton-root': {
+      '&:hover': {
+        backgroundColor: 'rgb(74, 191, 117)',
+      },
+      backgroundColor: 'rgb(74, 191, 117)',
+      width: '200px',
+      color: 'white',
+      fontFamily: 'system-ui',
+      fontSize: '20px',
+      height: '30px',
+      alignItems: 'center',
     },
-
-    selectedMenuItem: {
-        '&.MuiButton-root': {
-            '&:hover': {
-                backgroundColor: 'rgb(74, 191, 117)'
-            },
-            backgroundColor: 'rgb(74, 191, 117)',
-            width: '200px',
-            color: 'white',
-            fontFamily: 'system-ui',
-            fontSize: '20px',
-            height: '30px',
-            alignItems: 'center'
-        }
-    }
+  },
 });
 
 export default useStyles;

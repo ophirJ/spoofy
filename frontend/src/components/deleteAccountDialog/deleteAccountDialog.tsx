@@ -16,64 +16,56 @@ const CANCEL = 'ביטול';
 const APPROVE = 'אישור';
 const LOGIN_PATH = '/';
 
-
 const DeleteAccountDialog: React.FC = () => {
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const classes = useStyles();
+  const [deleteUser] = useMutation(DELETE_USER);
+  const currentUser = useAppSelector((state) => state.currentUser);
 
-    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-    const classes = useStyles();
-    const [deleteUser] = useMutation(DELETE_USER);
-    const currentUser = useAppSelector(state => state.currentUser);
+  const handleClick = () => {
+    setOpenDeleteDialog((prev) => !prev);
+  };
 
-    const handleClick = () => {
-        setOpenDeleteDialog(prev => !prev);
-    };
+  const deleteAccount = () => {
+    handleClick();
+    deleteUser({
+      variables: {
+        id: currentUser.id,
+      },
+    });
+  };
 
-    const deleteAccount = () => {
-        handleClick();
-        deleteUser({
-            variables: {
-                id: currentUser.id
-            }})
-    };
+  return (
+    <>
+      <Button className={classes.deleteAccountBtn} onClick={handleClick}>
+        {DELETE_ACCOUNT}
+      </Button>
 
-
-    return (
-        <>
+      <Dialog
+        open={openDeleteDialog}
+        onClose={handleClick}
+        className={classes.deleteDialog}
+      >
+        <DialogTitle className={classes.dialogContent}>
+          {DELETE_MESSAGE}
+        </DialogTitle>
+        <DialogActions>
+          <Button onClick={handleClick} className={classes.cancelDeleteBtn}>
+            {CANCEL}
+          </Button>
+          <Link to={LOGIN_PATH}>
             <Button
-                className={classes.deleteAccountBtn}
-                onClick={handleClick}
+              onClick={deleteAccount}
+              autoFocus
+              className={classes.approveDeleteBtn}
             >
-                {DELETE_ACCOUNT}
+              {APPROVE}
             </Button>
-
-            <Dialog
-                open={openDeleteDialog}
-                onClose={handleClick}
-                className={classes.deleteDialog}
-            >
-                <DialogTitle className={classes.dialogContent}>
-                    {DELETE_MESSAGE}
-                </DialogTitle>
-                <DialogActions>
-                    <Button
-                        onClick={handleClick}
-                        className={classes.cancelDeleteBtn}
-                    >
-                        {CANCEL}
-                    </Button>
-                    <Link to={LOGIN_PATH}>
-                        <Button
-                            onClick={deleteAccount}
-                            autoFocus
-                            className={classes.approveDeleteBtn}
-                        >
-                            {APPROVE}
-                        </Button>
-                    </Link>
-                </DialogActions>
-            </Dialog>
-        </>
-    );
+          </Link>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
 };
 
 export default DeleteAccountDialog;

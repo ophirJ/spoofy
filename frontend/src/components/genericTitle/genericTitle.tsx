@@ -2,19 +2,14 @@ import Typography from '@mui/material/Typography';
 
 import useStyles from './genericTitleStyles';
 
-interface props{
-    text: string
+interface props {
+  text: string;
 }
 
-const GenericTitle: React.FC<props> = ({text}) => {
+const GenericTitle: React.FC<props> = ({ text }) => {
+  const classes = useStyles();
 
-    const classes = useStyles();
+  return <Typography className={classes.title}>{text}</Typography>;
+};
 
-    return(
-        <Typography className={classes.title}>
-            {text}
-        </Typography>
-    );
-}
-
-export default GenericTitle
+export default GenericTitle;
