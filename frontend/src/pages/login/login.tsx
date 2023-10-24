@@ -21,58 +21,57 @@ const SELECT_USER = 'בחר משתמש להתחברות';
 const LOGIN = 'התחבר';
 
 const LogIn: React.FC = () => {
+  const classes = useStyles();
+  const [selectedUser, setSelectedUser] = useState<User>();
+  const [users, setUsers] = useState<User[]>([]);
+  const dispatch = useAppDispatch();
 
-    const classes = useStyles();
-    const [selectedUser, setSelectedUser] = useState<User>();
-    const [users, setUsers] = useState<User[]>([]);
-    const dispatch = useAppDispatch();
+  const { data } = useQuery(GET_ALL_USERS, {
+    onCompleted: () => {
+      setUsers(data.allUsers.nodes);
+    },
+  });
 
-    const { data } = useQuery(GET_ALL_USERS, {
-        onCompleted: () => {
-            setUsers(data.allUsers.nodes);
-        } 
-    });
+  const logIn = () => {
+    selectedUser && dispatch(setUser(selectedUser));
+    dispatch(setTableMode(SideMenu.SONGS));
+  };
 
-    const logIn = () => {
-        selectedUser && dispatch(setUser(selectedUser));
-        dispatch(setTableMode(SideMenu.SONGS));
-    }
-
-    return (
-        <div className={classes.page}>
-            <Typography className={classes.musifyTitle}>
-                {MUSIFY}
-            </Typography>
-            <FormControl className={classes.form}>
-                <InputLabel className={classes.inputLabel}>{SELECT_USER}</InputLabel>
-                <Select
-                    className={classes.selectUser}
-                    inputProps={
-                        { className: classes.selectedUser }
-                    }
-                    onChange={(event: any) => {
-                        setSelectedUser(users.find(user => (user.firstName + ' ' + user.lastName) == event.target.value))}}
-                >
-                    {users.map(user => 
-                        <MenuItem 
-                            value={user.firstName + ' ' + user.lastName} 
-                            key={user.id}
-                            id={user.id}
-                        >
-                            {user.firstName + ' ' + user.lastName}
-                        </MenuItem>)}
-                </Select>
-                <Link to={'/home'} className={classes.linkToHome}>
-                    <Button 
-                        className={classes.loginBtn}
-                        onClick={logIn}
-                    >
-                        {LOGIN}
-                    </Button>
-                </Link>
-            </FormControl>
-        </div>
-    );
+  return (
+    <div className={classes.page}>
+      <Typography className={classes.musifyTitle}>{MUSIFY}</Typography>
+      <FormControl className={classes.form}>
+        <InputLabel className={classes.inputLabel}>{SELECT_USER}</InputLabel>
+        <Select
+          className={classes.selectUser}
+          inputProps={{ className: classes.selectedUser }}
+          onChange={(event: any) => {
+            setSelectedUser(
+              users.find(
+                (user) =>
+                  user.firstName + ' ' + user.lastName == event.target.value
+              )
+            );
+          }}
+        >
+          {users.map((user) => (
+            <MenuItem
+              value={user.firstName + ' ' + user.lastName}
+              key={user.id}
+              id={user.id}
+            >
+              {user.firstName + ' ' + user.lastName}
+            </MenuItem>
+          ))}
+        </Select>
+        <Link to={'/home'} className={classes.linkToHome}>
+          <Button className={classes.loginBtn} onClick={logIn}>
+            {LOGIN}
+          </Button>
+        </Link>
+      </FormControl>
+    </div>
+  );
 };
 
-export default LogIn
+export default LogIn;

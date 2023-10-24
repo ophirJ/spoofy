@@ -1,6 +1,5 @@
 export enum SideMenu {
-    SONGS = 'songs',
-    PLAYLISTS = 'playlists',
-    FAVORITES = 'favorites',
-    NONE = 'none'
-};
+  SONGS = 'songs',
+  PLAYLISTS = 'playlists',
+  FAVORITES = 'favorites',
+}

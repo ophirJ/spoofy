@@ -1,13 +1,11 @@
-import { makeStyles } from '@mui/styles'
+import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
-
-    heartIcon: {
-        '&.MuiIconButton-root': {
-            color: 'white'
-        }
+  heartIcon: {
+    '&.MuiIconButton-root': {
+      color: 'white',
     },
-
+  },
 });
 
 export default useStyles;
