@@ -13,7 +13,6 @@ const useStyles = makeStyles({
   tableAndMenu: {
     display: 'flex',
     gap: '40px',
-    paddingTop: '30px',
     height: '70vh',
   },
 });

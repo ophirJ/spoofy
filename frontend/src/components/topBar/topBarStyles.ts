@@ -7,13 +7,15 @@ const useStyles = makeStyles({
     border: '1px solid white',
     borderRadius: '10px',
     fontFamily: 'system-ui',
+    fontSize: '10px',
+    height: '60px',
   },
 
   buttons: {
     display: 'flex',
     gap: '15px',
-    padding: '5px',
-    height: '25px',
+    // padding: '5px',
+    height: '15px',
   },
 
   topBar: {
@@ -24,8 +26,8 @@ const useStyles = makeStyles({
   },
 
   musifyLogo: {
-    width: '190px',
-    height: '70px',
+    width: '160px',
+    height: '50px',
   },
 
   logoutBtn: {
@@ -34,7 +36,7 @@ const useStyles = makeStyles({
       borderRadius: '30px',
       width: '120px',
       color: 'white',
-      height: '25px',
+      height: '20px',
       alignItems: 'center',
       '&:hover': {
         backgroundColor: 'rgb(130, 130, 124)',

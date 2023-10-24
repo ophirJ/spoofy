@@ -4,8 +4,13 @@ const useStyles = makeStyles({
   playlitsPage: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '30px',
+    gap: '15px',
     alignItems: 'center',
+  },
+
+  playlistTables: {
+    maxHeight: '45vh',
+    overflowY: 'auto',
   },
 
   playlistName: {

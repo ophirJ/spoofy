@@ -2,7 +2,7 @@ import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
   playline: {
-    height: '20vh',
+    height: '17vh',
     backgroundColor: 'rgb(112, 106, 106)',
     bottom: 0,
     paddingRight: '20px',
@@ -11,6 +11,7 @@ const useStyles = makeStyles({
   SongAndIcons: {
     display: 'flex',
     justifyContent: 'space-evenly',
+    height: '5vh',
   },
 
   songDetails: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
   },
 
   songName: {
-    fontSize: '20px',
+    fontSize: '15px',
   },
 
   artistName: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles({
   icon: {
     '&.MuiSvgIcon-root': {
       color: 'white',
-      fontSize: '40px',
+      fontSize: '35px',
     },
   },
 
@@ -52,13 +53,13 @@ const useStyles = makeStyles({
   songTime: {
     display: 'flex',
     justifyContent: 'space-between',
-    paddingBottom: '5px',
     color: 'white',
     fontFamily: 'system-ui',
   },
 
   sliderAndTime: {
     paddingLeft: '40px',
+    paddingTop: '10px',
   },
 });
 

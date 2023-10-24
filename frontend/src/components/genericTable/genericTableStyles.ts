@@ -18,7 +18,7 @@ const useStyles = makeStyles({
       alignItems: 'center',
       border: 0,
       '&>.MuiDataGrid-main': {
-        width: '90%',
+        width: '95%',
       },
     },
     '&.css-kzyyzb-MuiDataGrid-root .MuiDataGrid-row.Mui-selected': {
@@ -44,8 +44,8 @@ const useStyles = makeStyles({
 
   tableContainer: {
     backgroundColor: 'rgb(112, 106, 106)',
-    maxHeight: '40vh',
-    width: '75vw',
+    height: '40vh',
+    width: '70vw',
     borderRadius: '15px',
     display: 'flex',
     flexDirection: 'column',

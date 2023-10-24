@@ -57,19 +57,21 @@ const PlaylistsTable: React.FC = () => {
   return (
     <div className={classes.playlitsPage}>
       <GenericTitle text={PLAYLISTS} />
-      {playlists.map((playlist) => (
-        <div key={playlist.id}>
-          <div className={classes.playlistTitle}>
-            <Typography className={classes.playlistName}>
-              {playlist.name}
-            </Typography>
-            <IconButton>
-              <EditIcon className={classes.editIcon} />
-            </IconButton>
+      <div className={classes.playlistTables}>
+        {playlists.map((playlist) => (
+          <div key={playlist.id}>
+            <div className={classes.playlistTitle}>
+              <Typography className={classes.playlistName}>
+                {playlist.name}
+              </Typography>
+              <IconButton>
+                <EditIcon className={classes.editIcon} />
+              </IconButton>
+            </div>
+            <GenericTable songs={playlist.songs} />
           </div>
-          <GenericTable songs={playlist.songs} />
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

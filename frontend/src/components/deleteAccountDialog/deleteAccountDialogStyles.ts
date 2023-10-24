@@ -11,7 +11,7 @@ const useStyles = makeStyles({
         backgroundColor: 'rgb(191, 90, 74)',
       },
       fontFamily: 'system-ui',
-      height: '25px',
+      height: '20px',
       alignItems: 'center',
     },
   },
