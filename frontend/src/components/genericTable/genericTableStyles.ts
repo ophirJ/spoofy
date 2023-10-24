@@ -21,16 +21,12 @@ const useStyles = makeStyles({
         width: '90%',
       },
     },
-    '&.MuiDataGrid-row Mui-selected': {
+    '&.css-kzyyzb-MuiDataGrid-root .MuiDataGrid-row.Mui-selected': {
       backgroundColor: 'rgb(129, 129, 129)',
     },
-    '&.css-1lymaxv-MuiDataGrid-root .MuiDataGrid-row.Mui-selected': {
+    '&.css-1lymaxv-MuiDataGrid-root .MuiDataGrid-row.Mui-selected:hover': {
       backgroundColor: 'rgb(129, 129, 129)',
     },
-    '&.css-1lymaxv-MuiDataGrid-root .MuiDataGrid-row.Mui-selected:hover, .css-1lymaxv-MuiDataGrid-root .MuiDataGrid-row.Mui-selected.Mui-hovered':
-      {
-        backgroundColor: 'rgb(129, 129, 129)',
-      },
     '&.MuiDataGrid-root .MuiDataGrid-cell:focus': {
       outline: 'none',
     },
