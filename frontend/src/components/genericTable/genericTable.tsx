@@ -43,18 +43,21 @@ const GenericTable: React.FC<props> = ({ songs }) => {
       headerName: SONG,
       headerClassName: classes.songsTable,
       width: 350,
+      sortable: false,
     },
     {
       field: 'artist',
       headerName: ARTIST,
       headerClassName: classes.songsTable,
       width: 260,
+      sortable: false,
     },
     {
       field: 'duration',
       headerName: DURATION,
       headerClassName: classes.songsTable,
       width: 120,
+      sortable: false,
     },
     {
       field: 'addToPlaylist',
@@ -68,6 +71,7 @@ const GenericTable: React.FC<props> = ({ songs }) => {
         );
       },
       width: 30,
+      sortable: false,
     },
     {
       field: 'addToFavorites',
@@ -81,6 +85,7 @@ const GenericTable: React.FC<props> = ({ songs }) => {
         );
       },
       width: 30,
+      sortable: false,
     },
   ];
 
@@ -102,7 +107,13 @@ const GenericTable: React.FC<props> = ({ songs }) => {
     );
   };
 
-  const rows: Song[] = [];
+  const rows: {
+    id: string;
+    song: string;
+    artist: string;
+    duration: string;
+    isFavorite: boolean | undefined;
+  }[] = [];
   songs.map((song) =>
     rows.push({
       id: song.id,
@@ -120,6 +131,7 @@ const GenericTable: React.FC<props> = ({ songs }) => {
         rows={rows}
         columns={columns}
         disableColumnMenu
+        disableColumnResize
         hideFooter
         onRowClick={(params) => selectSong(params)}
         onRowSelectionModelChange={(newSelectionModel) =>

@@ -11,7 +11,6 @@ import Autocomplete, {
   AutocompleteChangeReason,
 } from '@mui/material/Autocomplete';
 import { useForm, FormProvider } from 'react-hook-form';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { GET_ALL_ARTISTS } from '../../db/artists/query';
@@ -20,6 +19,7 @@ import { CREATE_SONG } from '../../db/songs/mutation';
 import { songsContext } from '../../context/songsContext';
 import { Song } from '../../models/interfaces/song';
 import useStyles from './createSongDIalogStyles';
+import { schema } from './yupSchema';
 
 const ADD_SONG = 'צור שיר+';
 const DIALOG_TITLE = 'יצירת שיר';
@@ -27,10 +27,6 @@ const SONG_NAME = 'שם';
 const ARTIST = 'זמר';
 const DURATION = 'משך שיר';
 const CREATE_SONG_TEXT = 'צור שיר';
-const SONG_ERROR = 'שדה השם הינו שדה חובה';
-const ARTIST_ERROR = 'שדה הזמר הינו שדה חובה';
-const DURATION_ERROR = ' שדה משך השיר חייב להיות בפורמט mm:ss';
-const DURATION_REQUIRED_ERROR = 'שדה משך השיר הינו שדה חובה';
 
 const CreateSongDialog: React.FC = () => {
   const classes = useStyles();
@@ -42,15 +38,6 @@ const CreateSongDialog: React.FC = () => {
   const [duration, setDuration] = useState<number>(0);
 
   const [createSong] = useMutation(CREATE_SONG);
-
-  const schema = yup.object().shape({
-    songName: yup.string().required(SONG_ERROR),
-    artistName: yup.string().required(ARTIST_ERROR),
-    duration: yup
-      .string()
-      .required(DURATION_REQUIRED_ERROR)
-      .matches(/[0-5][0-9]:[0-5][0-9]/, DURATION_ERROR),
-  });
 
   const {
     register,
