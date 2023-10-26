@@ -4,43 +4,49 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
+import { DELETE_USER } from '../../../../db/users/mutation';
+import { useAppSelector } from '../../../../redux/hooks';
 import useStyles from './deleteAccountDialogStyles';
-import { DELETE_USER } from '../../db/users/mutations';
-import { useAppSelector } from '../../redux/hooks';
 
-const DELETE_ACCOUNT = 'מחק חשבון';
 const DELETE_MESSAGE = 'האם אתה בטוח שאתה רוצה למחוק את החשבון?';
 const CANCEL = 'ביטול';
 const APPROVE = 'אישור';
 const LOGIN_PATH = '/';
 
-const DeleteAccountDialog: React.FC = () => {
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+interface props {
+  openDeleteDialog: boolean;
+  setOpenDeleteDialog: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const DeleteAccountDialog: React.FC<props> = ({
+  openDeleteDialog,
+  setOpenDeleteDialog,
+}) => {
   const classes = useStyles();
   const [deleteUser] = useMutation(DELETE_USER);
   const currentUser = useAppSelector((state) => state.currentUser);
+  const navigate = useNavigate();
 
   const handleClick = () => {
     setOpenDeleteDialog((prev) => !prev);
   };
 
   const deleteAccount = () => {
-    handleClick();
     deleteUser({
       variables: {
         id: currentUser.id,
+      },
+      onCompleted: () => {
+        handleClick();
+        navigate(LOGIN_PATH);
       },
     });
   };
 
   return (
     <>
-      <Button className={classes.deleteAccountBtn} onClick={handleClick}>
-        {DELETE_ACCOUNT}
-      </Button>
-
       <Dialog
         open={openDeleteDialog}
         onClose={handleClick}
@@ -53,15 +59,13 @@ const DeleteAccountDialog: React.FC = () => {
           <Button onClick={handleClick} className={classes.cancelDeleteBtn}>
             {CANCEL}
           </Button>
-          <Link to={LOGIN_PATH}>
-            <Button
-              onClick={deleteAccount}
-              autoFocus
-              className={classes.approveDeleteBtn}
-            >
-              {APPROVE}
-            </Button>
-          </Link>
+          <Button
+            onClick={deleteAccount}
+            autoFocus
+            className={classes.approveDeleteBtn}
+          >
+            {APPROVE}
+          </Button>
         </DialogActions>
       </Dialog>
     </>

@@ -24,7 +24,6 @@ const useStyles = makeStyles({
   playlistTitle: {
     display: 'flex',
   },
-
   editIcon: {
     '&.MuiSvgIcon-root': {
       backgroundColor: 'white',

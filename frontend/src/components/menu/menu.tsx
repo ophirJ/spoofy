@@ -1,42 +1,33 @@
 import Button from '@mui/material/Button';
+import { clsx } from 'clsx';
 
+import { SideMenu } from '../../models/enums/sideMenu';
 import useStyles from './menuStyles';
-import { SideMenu } from '../../types/sideMenu';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { setTableMode } from '../../redux/currentTableSlice';
 
-const SONGS = 'שירים';
-const PLAYLISTS = 'פלייליסטים';
-const FAVORITES = 'מועדפים';
+interface props {
+  tableMode: SideMenu | undefined;
+  setTableMode: React.Dispatch<React.SetStateAction<SideMenu | undefined>>;
+}
 
-const MENU_ITEMS = [
-  { [SONGS]: SideMenu.SONGS },
-  { [PLAYLISTS]: SideMenu.PLAYLISTS },
-  { [FAVORITES]: SideMenu.FAVORITES },
-];
-
-const Menu: React.FC = () => {
+const Menu: React.FC<props> = ({ tableMode, setTableMode }) => {
   const classes = useStyles();
-  const dispatch = useAppDispatch();
-  const currentTableMode = useAppSelector(
-    (state) => state.currentTableMode.currentTableMode
-  );
+
+  const handleClick = (option: SideMenu) => {
+    option === tableMode ? setTableMode(undefined) : setTableMode(option);
+  };
 
   return (
     <div className={classes.menu}>
-      {MENU_ITEMS.map((item) => (
+      {Object.values(SideMenu).map((option) => (
         <Button
-          key={MENU_ITEMS.indexOf(item)}
-          className={
-            currentTableMode === Object.values(item)[0]
-              ? classes.selectedMenuItem
-              : classes.menuItem
-          }
-          onClick={() => {
-            dispatch(setTableMode(Object.values(item)[0]));
-          }}
+          key={option}
+          className={clsx({
+            [classes.menuItem]: true,
+            [classes.selectedMenuItem]: tableMode === option,
+          })}
+          onClick={() => handleClick(option)}
         >
-          {Object.keys(item)[0]}
+          {option}
         </Button>
       ))}
     </div>

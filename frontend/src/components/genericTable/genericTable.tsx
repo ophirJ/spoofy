@@ -8,12 +8,13 @@ import { GridColDef, GridRowsProp } from '@mui/x-data-grid-pro';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
 
-import { DurationToString } from '../../DurationToString';
+import { DurationToString } from '../../utils/DurationToString';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { setSong, setSelectionModel } from '../../redux/playingSongSlice';
-import AddFavorite from '../addFavorite/addFavorite';
-import { Song } from '../../types/song';
+import { Song } from '../../models/interfaces/song';
+import AddFavorite from './addFavorite/addFavorite';
 import useStyles from './genericTableStyles';
+import AddToPlaylist from './addToPlaylist/addToPlaylist';
 
 const SONG = 'שיר';
 const ARTIST = 'זמר';
@@ -60,9 +61,10 @@ const GenericTable: React.FC<props> = ({ songs }) => {
       headerName: '',
       renderCell: () => {
         return (
-          <IconButton className={classes.icons}>
-            <AddIcon />
-          </IconButton>
+          // <IconButton className={classes.icons}>
+          //   <AddIcon />
+          // </IconButton>
+          <AddToPlaylist />
         );
       },
       width: 30,
@@ -90,15 +92,17 @@ const GenericTable: React.FC<props> = ({ songs }) => {
     }
   };
 
-  const selectSong = (params: GridRowParams<any>) => {
-    let song;
-    playingSong?.id == params.id
-      ? (song = undefined)
-      : (song = songs.find((song) => song.id == params.id));
-    dispatch(setSong(song));
+  const selectSong = (params: GridRowParams) => {
+    dispatch(
+      setSong(
+        playingSong?.id !== params.id
+          ? songs.find((song) => song.id === params.id)
+          : undefined
+      )
+    );
   };
 
-  const rows: GridRowsProp[] = [];
+  const rows: Song[] = [];
   songs.map((song) =>
     rows.push({
       id: song.id,

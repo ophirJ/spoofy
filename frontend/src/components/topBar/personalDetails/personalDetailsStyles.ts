@@ -15,18 +15,8 @@ const useStyles = makeStyles({
     display: 'flex',
     gap: '15px',
     height: '15px',
-  },
-
-  topBar: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    direction: 'rtl',
-    padding: '10px',
-  },
-
-  musifyLogo: {
-    width: '160px',
-    height: '50px',
+    paddingLeft: '5px',
+    paddingRight: '5px',
   },
 
   logoutBtn: {
@@ -51,6 +41,21 @@ const useStyles = makeStyles({
 
   linkToLogin: {
     textDecoration: 'none',
+  },
+
+  deleteAccountBtn: {
+    '&.MuiButton-root': {
+      backgroundColor: 'rgb(191, 90, 74)',
+      borderRadius: '30px',
+      width: '120px',
+      color: 'white',
+      '&:hover': {
+        backgroundColor: 'rgb(191, 90, 74)',
+      },
+      fontFamily: 'system-ui',
+      height: '20px',
+      alignItems: 'center',
+    },
   },
 });
 

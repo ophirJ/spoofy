@@ -2,19 +2,17 @@ import Typography from '@mui/material/Typography';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-
-import useStyles from './loginStyles';
 import { useState } from 'react';
-import { GET_ALL_USERS } from '../../db/users/queries';
-import { User } from '../../types/user';
+
+import { GET_ALL_USERS } from '../../db/users/query';
+import { User } from '../../models/interfaces/user';
 import { useAppDispatch } from '../../redux/hooks';
 import { setUser } from '../../redux/currentUserSlice';
-import { setTableMode } from '../../redux/currentTableSlice';
-import { SideMenu } from '../../types/sideMenu';
+import useStyles from './loginStyles';
 
 const MUSIFY = 'Musify';
 const SELECT_USER = 'בחר משתמש להתחברות';
@@ -34,7 +32,6 @@ const LogIn: React.FC = () => {
 
   const logIn = () => {
     selectedUser && dispatch(setUser(selectedUser));
-    dispatch(setTableMode(SideMenu.SONGS));
   };
 
   return (
@@ -45,21 +42,14 @@ const LogIn: React.FC = () => {
         <Select
           className={classes.selectUser}
           inputProps={{ className: classes.selectedUser }}
-          onChange={(event: any) => {
+          onChange={(event: SelectChangeEvent) => {
             setSelectedUser(
-              users.find(
-                (user) =>
-                  user.firstName + ' ' + user.lastName == event.target.value
-              )
+              users.find((user) => user.id === event.target.value)
             );
           }}
         >
           {users.map((user) => (
-            <MenuItem
-              value={user.firstName + ' ' + user.lastName}
-              key={user.id}
-              id={user.id}
-            >
+            <MenuItem value={user.id} key={user.id}>
               {user.firstName + ' ' + user.lastName}
             </MenuItem>
           ))}

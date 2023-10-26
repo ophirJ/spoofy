@@ -25,7 +25,7 @@ const useStyles = makeStyles({
   },
 
   songName: {
-    fontSize: '15px',
+    fontSize: '20px',
   },
 
   artistName: {

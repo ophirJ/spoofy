@@ -2,15 +2,14 @@ import { useQuery } from '@apollo/client';
 import { useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
-
-import GenericTable from '../genericTable/genericTable';
-import GenericTitle from '../genericTitle/genericTitle';
-import useStyles from './playlistsTableStyles';
-import { GET_ALL_PLAYLISTS_BY_USER } from '../../db/playlists/queires';
-import { Playlist } from '../../types/playlist';
-import { Song } from '../../types/song';
 import { Typography } from '@mui/material';
+
+import { GET_ALL_PLAYLISTS_BY_USER } from '../../db/playlists/query';
+import { Playlist } from '../../models/interfaces/playlist';
+import { Song } from '../../models/interfaces/song';
 import { useAppSelector } from '../../redux/hooks';
+import GenericTable from '../genericTable/genericTable';
+import useStyles from './playlistsTableStyles';
 
 const PLAYLISTS = 'פלייליסטים';
 
@@ -56,7 +55,6 @@ const PlaylistsTable: React.FC = () => {
 
   return (
     <div className={classes.playlitsPage}>
-      <GenericTitle text={PLAYLISTS} />
       <div className={classes.playlistTables}>
         {playlists.map((playlist) => (
           <div key={playlist.id}>

@@ -52,6 +52,7 @@ const useStyles = makeStyles({
       color: 'white',
       width: '100px',
       borderRadius: '10px',
+      fontSize: '20px',
     },
   },
 
@@ -82,7 +83,6 @@ const useStyles = makeStyles({
     direction: 'rtl',
     fontFamily: 'system-ui',
   },
-
   linkToHome: {
     textDecoration: 'none',
   },

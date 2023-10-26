@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { GridRowId } from '@mui/x-data-grid-pro';
 
-import { Song } from '../types/song';
+import { Song } from '../models/interfaces/song';
 
 interface playingSong {
   song: Song | undefined;

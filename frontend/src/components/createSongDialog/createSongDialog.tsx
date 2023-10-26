@@ -10,18 +10,18 @@ import { useQuery, useMutation } from '@apollo/client';
 import Autocomplete, {
   AutocompleteChangeReason,
 } from '@mui/material/Autocomplete';
-import { useForm } from 'react-hook-form';
+import { useForm, FormProvider } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+import { GET_ALL_ARTISTS } from '../../db/artists/query';
+import { Artist } from '../../models/interfaces/artist';
+import { CREATE_SONG } from '../../db/songs/mutation';
+import { songsContext } from '../../context/songsContext';
+import { Song } from '../../models/interfaces/song';
 import useStyles from './createSongDIalogStyles';
-import { GET_ALL_ARTISTS } from '../../db/artists/queries';
-import { Artist } from '../../types/artist';
-import { CREATE_SONG } from '../../db/songs/mutations';
-import { songsContext } from '../context/songsContext';
-import { Song } from '../../types/song';
 
-const ADD_SONG = 'הוסף שיר+';
+const ADD_SONG = 'צור שיר+';
 const DIALOG_TITLE = 'יצירת שיר';
 const SONG_NAME = 'שם';
 const ARTIST = 'זמר';
@@ -35,6 +35,13 @@ const DURATION_REQUIRED_ERROR = 'שדה משך השיר הינו שדה חובה
 const CreateSongDialog: React.FC = () => {
   const classes = useStyles();
   const { setSongs } = useContext(songsContext);
+  const [openCreateSong, setOpenCreateSong] = useState(false);
+  const [artistName, setArtistName] = useState<string>('');
+  const [songName, setSongName] = useState<string>('');
+  const [artists, setArtists] = useState<Artist[]>([]);
+  const [duration, setDuration] = useState<number>(0);
+
+  const [createSong] = useMutation(CREATE_SONG);
 
   const schema = yup.object().shape({
     songName: yup.string().required(SONG_ERROR),
@@ -58,14 +65,6 @@ const CreateSongDialog: React.FC = () => {
     reset();
     AddSong();
   };
-
-  const [openCreateSong, setOpenCreateSong] = useState(false);
-  const [artistName, setArtistName] = useState<string>('');
-  const [songName, setSongName] = useState<string>('');
-  const [artists, setArtists] = useState<Artist[]>([]);
-  const [duration, setDuration] = useState<number>(0);
-
-  const [createSong] = useMutation(CREATE_SONG);
 
   const handleClick = () => {
     setOpenCreateSong((prev) => !prev);
@@ -95,7 +94,7 @@ const CreateSongDialog: React.FC = () => {
   const changeDuration = (
     event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
-    const durationString: string = event.target.value;
+    const durationString = event.target.value;
     const separatedDuration = durationString.split(':');
     setDuration(
       Number(separatedDuration[0]) * 60 + Number(separatedDuration[1])

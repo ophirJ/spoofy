@@ -1,21 +1,6 @@
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
-  deleteAccountBtn: {
-    '&.MuiButton-root': {
-      backgroundColor: 'rgb(191, 90, 74)',
-      borderRadius: '30px',
-      width: '120px',
-      color: 'white',
-      '&:hover': {
-        backgroundColor: 'rgb(191, 90, 74)',
-      },
-      fontFamily: 'system-ui',
-      height: '20px',
-      alignItems: 'center',
-    },
-  },
-
   approveDeleteBtn: {
     '&.MuiButton-root': {
       backgroundColor: 'rgb(74, 191, 117)',
