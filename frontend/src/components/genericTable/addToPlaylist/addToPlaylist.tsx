@@ -3,16 +3,24 @@ import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
 import { useState, useContext } from 'react';
+import { useMutation } from '@apollo/client';
+import Button from '@mui/material/Button';
 
-import useStyles from './addToPlaylistStyles';
 import { playlistsContext } from 'context/playlistsContext';
+import { ADD_SONG_TO_PLAYLIST } from 'db/playlists/mutation';
+import useStyles from './addToPlaylistStyles';
 
 const ADD_TO_PLAYLIST = 'הוסף לפלייליסט';
 
-const AddToPlaylist: React.FC = () => {
+interface props {
+  songId: string;
+}
+
+const AddToPlaylist: React.FC<props> = ({ songId }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const { playlists } = useContext(playlistsContext);
+  const [addToPlaylist] = useMutation(ADD_SONG_TO_PLAYLIST);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event?.stopPropagation();
@@ -24,6 +32,22 @@ const AddToPlaylist: React.FC = () => {
   };
 
   const open = Boolean(anchorEl);
+
+  const handlePlaylistClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    addToPlaylist({
+      variables: {
+        songId: songId,
+        playlistId: playlists.find(
+          (playlist) => playlist.id === event.target.id
+        )?.id,
+      },
+      onCompleted: (data) => {
+        console.log(data);
+      },
+    });
+  };
 
   return (
     <div>
@@ -44,9 +68,19 @@ const AddToPlaylist: React.FC = () => {
             {ADD_TO_PLAYLIST}
           </Typography>
           {playlists.map((playlist) => (
-            <Typography className={classes.playlistName}>
+            // <Typography
+            //   className={classes.playlistName}
+            //   onClick={(event) => handlePlaylistClick(event)}
+            // >
+            //   {playlist.name}
+            // </Typography>
+            <Button
+              onClick={(event) => handlePlaylistClick(event)}
+              className={classes.playlistName}
+              id={playlist.id}
+            >
               {playlist.name}
-            </Typography>
+            </Button>
           ))}
         </div>
       </Popover>

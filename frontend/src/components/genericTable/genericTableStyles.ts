@@ -62,6 +62,10 @@ const useStyles = makeStyles({
       fill: 'white',
     },
   },
+
+  songActions: {
+    display: 'flex',
+  },
 });
 
 export default useStyles;

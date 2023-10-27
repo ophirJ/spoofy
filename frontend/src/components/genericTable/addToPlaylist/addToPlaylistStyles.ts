@@ -35,6 +35,13 @@ const useStyles = makeStyles({
       padding: '5px',
       fontSize: '12px',
     },
+    '&.MuiButton-root': {
+      color: 'white',
+      borderBottom: '1px solid white',
+      fontFamily: 'system-ui',
+      padding: '5px',
+      fontSize: '12px',
+    },
   },
 });
 

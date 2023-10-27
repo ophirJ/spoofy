@@ -5,8 +5,6 @@ import {
   LicenseInfo,
 } from '@mui/x-data-grid-pro';
 import { GridColDef, GridRowsProp } from '@mui/x-data-grid-pro';
-import AddIcon from '@mui/icons-material/Add';
-import IconButton from '@mui/material/IconButton';
 
 import { DurationToString } from 'utils/DurationToString';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
@@ -62,29 +60,18 @@ const GenericTable: React.FC<props> = ({ songs }) => {
     {
       field: 'addToPlaylist',
       headerName: '',
-      renderCell: () => {
-        return (
-          // <IconButton className={classes.icons}>
-          //   <AddIcon />
-          // </IconButton>
-          <AddToPlaylist />
-        );
-      },
-      width: 30,
-      sortable: false,
-    },
-    {
-      field: 'addToFavorites',
-      headerName: '',
       renderCell: (params) => {
         return (
-          <AddFavorite
-            isFavorite={params.row.isFavorite}
-            songID={String(params.id)}
-          />
+          <div className={classes.songActions}>
+            <AddToPlaylist songId={String(params.id)} />
+            <AddFavorite
+              isFavorite={params.row.isFavorite}
+              songID={String(params.id)}
+            />
+          </div>
         );
       },
-      width: 30,
+      width: 100,
       sortable: false,
     },
   ];
