@@ -13,11 +13,11 @@ import Autocomplete, {
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { GET_ALL_ARTISTS } from '../../db/artists/query';
-import { Artist } from '../../models/interfaces/artist';
-import { CREATE_SONG } from '../../db/songs/mutation';
-import { songsContext } from '../../context/songsContext';
-import { Song } from '../../models/interfaces/song';
+import { GET_ALL_ARTISTS } from 'db/artists/query';
+import { Artist } from 'modules/interfaces/artist';
+import { CREATE_SONG } from 'db/songs/mutation';
+import { songsContext } from 'context/songsContext';
+import { Song } from 'modules/interfaces/song';
 import useStyles from './createSongDIalogStyles';
 import { schema } from './yupSchema';
 

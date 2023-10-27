@@ -3,11 +3,11 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-import { useAppSelector, useAppDispatch } from '../../../redux/hooks';
-import DeleteAccountDialog from './deleteAccountDialog/deleteAccountDialog';
-import { resetUser } from '../../../redux/currentUserSlice';
-import { resetSong } from '../../../redux/playingSongSlice';
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
+import { resetUser } from 'redux/currentUserSlice';
+import { resetSong } from 'redux/playingSongSlice';
 import useStyles from './personalDetailsStyles';
+import DeleteAccountDialog from './deleteAccountDialog/deleteAccountDialog';
 
 const LOGOUT = 'התנתקות';
 const LOGIN_PATH = '/';

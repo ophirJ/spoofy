@@ -18,13 +18,6 @@
     "baseUrl": "./src",
     "paths": {
       "src/*":["./*"]
-    //   "@/components/*": ["components/*"],
-    //   "@/redux/*": ["redux/*"],
-    //   "@/db/*": ["db/*"],
-    //   "@/context/*": ["context/*"],
-    //   "@/models/*": ["models/*"],
-    //   "@/utils/*": ["utils/*"],
-    //   "@/assets/*": ["assets/*"]
     }
   },
   "include": ["src"],

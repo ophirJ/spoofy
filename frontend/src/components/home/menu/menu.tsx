@@ -1,7 +1,7 @@
 import Button from '@mui/material/Button';
 import { clsx } from 'clsx';
 
-import { SideMenu } from '../../models/enums/sideMenu';
+import { SideMenu } from 'src/modules/enums/sideMenu';
 import useStyles from './menuStyles';
 
 interface props {

@@ -4,10 +4,10 @@ import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
 import { Typography } from '@mui/material';
 
-import { GET_ALL_PLAYLISTS_BY_USER } from '../../db/playlists/query';
-import { Playlist } from '../../models/interfaces/playlist';
-import { Song } from '../../models/interfaces/song';
-import { useAppSelector } from '../../redux/hooks';
+import { GET_ALL_PLAYLISTS_BY_USER } from 'db/playlists/query';
+import { Playlist } from 'modules/interfaces/playlist';
+import { Song } from 'modules/interfaces/song';
+import { useAppSelector } from 'redux/hooks';
 import GenericTable from '../genericTable/genericTable';
 import useStyles from './playlistsTableStyles';
 

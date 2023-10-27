@@ -1,4 +1,4 @@
-import logo from '../../assets/musify-logo.png';
+import logo from 'assets/musify-logo.png';
 import useStyles from './topBarStyles';
 import PersonalDetails from './personalDetails/personalDetails';
 

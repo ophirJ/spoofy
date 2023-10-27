@@ -6,10 +6,10 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Slider from '@mui/material/Slider';
 import { useEffect, useState, useContext } from 'react';
 
-import { DurationToString } from '../../utils/DurationToString';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-import { songsContext } from '../../context/songsContext';
-import { setSong, setSelectionModel } from '../../redux/playingSongSlice';
+import { DurationToString } from 'utils/DurationToString';
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
+import { songsContext } from 'context/songsContext';
+import { setSong, setSelectionModel } from 'redux/playingSongSlice';
 import useStyles from './playlineStyles';
 
 const SONG_DURATION = 235;

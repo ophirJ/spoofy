@@ -1,9 +1,9 @@
 import { useContext } from 'react';
 
-import { songsContext } from '../../context/songsContext';
+import { songsContext } from 'context/songsContext';
 import useStyles from './songsTableStyles';
 import GenericTable from '../genericTable/genericTable';
-import CreateSongDialog from '../createSongDialog/createSongDialog';
+import CreateSongDialog from './createSongDialog/createSongDialog';
 
 const SONG_LIST = 'רשימת שירים';
 

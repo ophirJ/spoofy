@@ -8,10 +8,10 @@ import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { useState } from 'react';
 
-import { GET_ALL_USERS } from '../../db/users/query';
-import { User } from '../../models/interfaces/user';
-import { useAppDispatch } from '../../redux/hooks';
-import { setUser } from '../../redux/currentUserSlice';
+import { GET_ALL_USERS } from 'db/users/query';
+import { User } from 'src/modules/interfaces/user';
+import { useAppDispatch } from 'redux/hooks';
+import { setUser } from 'redux/currentUserSlice';
 import useStyles from './loginStyles';
 
 const MUSIFY = 'Musify';

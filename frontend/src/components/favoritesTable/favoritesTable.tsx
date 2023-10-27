@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { songsContext } from '../../context/songsContext';
+import { songsContext } from 'context/songsContext';
 import GenericTable from '../genericTable/genericTable';
 import useStyles from './favoritesTableStyles';
 

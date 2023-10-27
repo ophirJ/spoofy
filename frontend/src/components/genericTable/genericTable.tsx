@@ -8,10 +8,10 @@ import { GridColDef, GridRowsProp } from '@mui/x-data-grid-pro';
 import AddIcon from '@mui/icons-material/Add';
 import IconButton from '@mui/material/IconButton';
 
-import { DurationToString } from '../../utils/DurationToString';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { setSong, setSelectionModel } from '../../redux/playingSongSlice';
-import { Song } from '../../models/interfaces/song';
+import { DurationToString } from 'utils/DurationToString';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { setSong, setSelectionModel } from 'redux/playingSongSlice';
+import { Song } from 'modules/interfaces/song';
 import AddFavorite from './addFavorite/addFavorite';
 import useStyles from './genericTableStyles';
 import AddToPlaylist from './addToPlaylist/addToPlaylist';

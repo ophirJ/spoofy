@@ -4,9 +4,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import { useMutation } from '@apollo/client';
 import { useContext } from 'react';
 
-import { useAppSelector } from '../../../redux/hooks';
-import { ADD_FAVORITE, DELETE_FAVORITE } from '../../../db/favorites/mutation';
-import { songsContext } from '../../../context/songsContext';
+import { useAppSelector } from 'redux/hooks';
+import { ADD_FAVORITE, DELETE_FAVORITE } from 'db/favorites/mutation';
+import { songsContext } from 'context/songsContext';
 import useStyles from './addFavoriteStyles';
 
 interface props {

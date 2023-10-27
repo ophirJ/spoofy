@@ -6,8 +6,8 @@ import { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 
-import { DELETE_USER } from '../../../../db/users/mutation';
-import { useAppSelector } from '../../../../redux/hooks';
+import { DELETE_USER } from 'db/users/mutation';
+import { useAppSelector } from 'redux/hooks';
 import useStyles from './deleteAccountDialogStyles';
 
 const DELETE_MESSAGE = 'האם אתה בטוח שאתה רוצה למחוק את החשבון?';
