@@ -3,9 +3,11 @@ import { useQuery } from '@apollo/client';
 import Typography from '@mui/material/Typography';
 
 import { songsContext } from 'context/songsContext';
+import { playlistsContext } from 'context/playlistsContext';
 import { Song } from 'modules/interfaces/song';
 import { GET_ALL_SONGS } from 'db/songs/query';
 import { SideMenu } from 'modules/enums/sideMenu';
+import { GET_ALL_PLAYLISTS_BY_USER } from 'db/playlists/query';
 import TopBar from './topBar/topBar';
 import useStyles from './homeStyles';
 import Menu from './menu/menu';
@@ -29,6 +31,7 @@ const Home: React.FC = () => {
   const playingSong = useAppSelector((state) => state.playingSong.song);
   const [songs, setSongs] = useState<Song[]>([]);
   const currentUser = useAppSelector((state) => state.currentUser);
+  const [playlists, setPlaylists] = useState<Playlist[]>([]);
 
   useQuery(GET_ALL_SONGS, {
     variables: { userId: currentUser.id },
@@ -52,21 +55,57 @@ const Home: React.FC = () => {
     },
   });
 
+  useQuery(GET_ALL_PLAYLISTS_BY_USER, {
+    variables: {
+      userId: currentUser.id,
+    },
+    onCompleted: (data) => {
+      const playlistsDB = data.allPlaylists.nodes;
+
+      playlistsDB.map(
+        (playlist: {
+          songPlaylistsByPlaylistId: { nodes: any[] };
+          id: string;
+          name: string;
+        }) => {
+          const songsList = playlist.songPlaylistsByPlaylistId.nodes.map(
+            (song) => ({
+              id: song.songBySongId.id,
+              name: song.songBySongId.name,
+              duration: song.songBySongId.duration,
+              artistName: song.songBySongId.artistByArtistId.name,
+            })
+          );
+          setPlaylists((prev) => [
+            ...prev,
+            {
+              id: playlist.id,
+              name: playlist.name,
+              songs: songsList,
+            },
+          ]);
+        }
+      );
+    },
+  });
+
   return (
     <songsContext.Provider value={{ songs, setSongs }}>
-      <div className={classes.homepage}>
-        <TopBar />
-        <div className={classes.mainPage}>
-          <div>
-            <Menu tableMode={tableMode} setTableMode={setTableMode} />
+      <playlistsContext.Provider value={{ playlists, setPlaylists }}>
+        <div className={classes.homepage}>
+          <TopBar />
+          <div className={classes.mainPage}>
+            <div>
+              <Menu tableMode={tableMode} setTableMode={setTableMode} />
+            </div>
+            <div className={classes.titleAndTable}>
+              <Typography className={classes.title}>{tableMode}</Typography>
+              {tableMode && Tables[tableMode]}
+            </div>
           </div>
-          <div className={classes.titleAndTable}>
-            <Typography className={classes.title}>{tableMode}</Typography>
-            {tableMode && Tables[tableMode]}
-          </div>
+          {playingSong && <Playline />}
         </div>
-        {playingSong && <Playline />}
-      </div>
+      </playlistsContext.Provider>
     </songsContext.Provider>
   );
 };

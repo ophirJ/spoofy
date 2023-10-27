@@ -59,9 +59,8 @@ const CreateSongDialog: React.FC = () => {
 
   const { data } = useQuery(GET_ALL_ARTISTS, {
     onCompleted: () => {
-      const artistsFromDB: Artist[] = [];
-      data.allArtists.nodes.map((artist: { id: string; name: string }) =>
-        artistsFromDB.push({
+      const artistsFromDB: Artist[] = data.allArtists.nodes.map(
+        (artist: { id: string; name: string }) => ({
           id: artist.id,
           name: artist.name,
         })

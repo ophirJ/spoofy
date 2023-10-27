@@ -113,16 +113,13 @@ const GenericTable: React.FC<props> = ({ songs }) => {
     artist: string;
     duration: string;
     isFavorite: boolean | undefined;
-  }[] = [];
-  songs.map((song) =>
-    rows.push({
-      id: song.id,
-      song: song.name,
-      artist: song.artistName,
-      duration: DurationToString(song.duration),
-      isFavorite: song.isFavorite,
-    })
-  );
+  }[] = songs.map((song) => ({
+    id: song.id,
+    song: song.name,
+    artist: song.artistName,
+    duration: DurationToString(song.duration),
+    isFavorite: song.isFavorite,
+  }));
 
   return (
     <div className={classes.tableContainer}>
