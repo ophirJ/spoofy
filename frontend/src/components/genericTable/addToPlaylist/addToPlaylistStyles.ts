@@ -43,6 +43,17 @@ const useStyles = makeStyles({
       fontSize: '12px',
     },
   },
+
+  alert: {
+    '&.MuiAlert-root': {
+      direction: 'rtl',
+      display: 'flex',
+      alignItems: 'center',
+    },
+    '&.MuiSvgIcon-root': {
+      fontSize: '20px',
+    },
+  },
 });
 
 export default useStyles;

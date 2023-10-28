@@ -63,7 +63,10 @@ const GenericTable: React.FC<props> = ({ songs }) => {
       renderCell: (params) => {
         return (
           <div className={classes.songActions}>
-            <AddToPlaylist songId={String(params.id)} />
+            <AddToPlaylist
+              songId={String(params.id)}
+              songName={params.row.song}
+            />
             <AddFavorite
               isFavorite={params.row.isFavorite}
               songID={String(params.id)}
