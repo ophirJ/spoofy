@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   },
 
   selectUser: {
-    width: '250px',
+    width: '300px',
     '&.MuiOutlinedInput-notchedOutline': {
       border: 0,
     },
@@ -32,13 +32,12 @@ const useStyles = makeStyles({
     backgroundColor: 'rgb(112, 106, 106)',
     '& .MuiSvgIcon-root': {
       color: 'white',
-      right: 'auto',
-      left: '2px',
     },
     borderRadius: '20px',
     '& .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input':
       {
         color: 'white',
+        fontSize: '20px',
       },
   },
 
@@ -68,9 +67,8 @@ const useStyles = makeStyles({
   inputLabel: {
     '&.MuiInputLabel-root': {
       color: 'white',
-      left: 'auto',
-      right: '30px',
       fontFamily: 'system-ui',
+      fontSize: '20px',
     },
     '&.MuiInputLabel-root.Mui-focused': {
       color: 'white',
@@ -79,10 +77,11 @@ const useStyles = makeStyles({
 
   selectedUser: {
     color: 'white',
-    fontSize: '25px',
+    fontSize: '20px',
     direction: 'rtl',
     fontFamily: 'system-ui',
   },
+
   linkToHome: {
     textDecoration: 'none',
   },

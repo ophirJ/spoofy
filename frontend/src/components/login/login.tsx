@@ -7,12 +7,15 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { useState } from 'react';
+import { ThemeProvider } from '@mui/material/styles';
+import { CacheProvider } from '@emotion/react';
 
 import { GET_ALL_USERS } from 'db/users/query';
 import { User } from 'src/modules/interfaces/user';
 import { useAppDispatch } from 'redux/hooks';
 import { setUser } from 'redux/currentUserSlice';
 import useStyles from './loginStyles';
+import { rtlTheme, cacheRtl } from 'src/rtlTheme';
 
 const MUSIFY = 'Musify';
 const SELECT_USER = 'בחר משתמש להתחברות';
@@ -35,32 +38,38 @@ const LogIn: React.FC = () => {
   };
 
   return (
-    <div className={classes.page}>
-      <Typography className={classes.musifyTitle}>{MUSIFY}</Typography>
-      <FormControl className={classes.form}>
-        <InputLabel className={classes.inputLabel}>{SELECT_USER}</InputLabel>
-        <Select
-          className={classes.selectUser}
-          inputProps={{ className: classes.selectedUser }}
-          onChange={(event: SelectChangeEvent) => {
-            setSelectedUser(
-              users.find((user) => user.id === event.target.value)
-            );
-          }}
-        >
-          {users.map((user) => (
-            <MenuItem value={user.id} key={user.id}>
-              {user.firstName + ' ' + user.lastName}
-            </MenuItem>
-          ))}
-        </Select>
-        <Link to={'/home'} className={classes.linkToHome}>
-          <Button className={classes.loginBtn} onClick={logIn}>
-            {LOGIN}
-          </Button>
-        </Link>
-      </FormControl>
-    </div>
+    <CacheProvider value={cacheRtl}>
+      <ThemeProvider theme={rtlTheme}>
+        <div className={classes.page}>
+          <Typography className={classes.musifyTitle}>{MUSIFY}</Typography>
+          <FormControl className={classes.form}>
+            <InputLabel className={classes.inputLabel}>
+              {SELECT_USER}
+            </InputLabel>
+            <Select
+              className={classes.selectUser}
+              inputProps={{ className: classes.selectedUser }}
+              onChange={(event: SelectChangeEvent) => {
+                setSelectedUser(
+                  users.find((user) => user.id === event.target.value)
+                );
+              }}
+            >
+              {users.map((user) => (
+                <MenuItem value={user.id} key={user.id}>
+                  {user.firstName + ' ' + user.lastName}
+                </MenuItem>
+              ))}
+            </Select>
+            <Link to={'/home'} className={classes.linkToHome}>
+              <Button className={classes.loginBtn} onClick={logIn}>
+                {LOGIN}
+              </Button>
+            </Link>
+          </FormControl>
+        </div>
+      </ThemeProvider>
+    </CacheProvider>
   );
 };
 

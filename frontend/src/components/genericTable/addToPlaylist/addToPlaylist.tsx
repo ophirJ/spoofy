@@ -12,6 +12,7 @@ import { playlistsContext } from 'context/playlistsContext';
 import { ADD_SONG_TO_PLAYLIST } from 'db/playlists/mutation';
 import useStyles from './addToPlaylistStyles';
 import { Playlist } from 'src/modules/interfaces/playlist';
+import { Song } from 'src/modules/interfaces/song';
 
 const ADD_TO_PLAYLIST = 'הוסף לפלייליסט';
 const THE_SONG = 'השיר';
@@ -21,11 +22,10 @@ const ERROR = 'error';
 const SUCCESS = 'success';
 
 interface props {
-  songId: string;
-  songName: string;
+  selectedSong: Song;
 }
 
-const AddToPlaylist: React.FC<props> = ({ songId, songName }) => {
+const AddToPlaylist: React.FC<props> = ({ selectedSong }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const { playlists } = useContext(playlistsContext);
@@ -51,18 +51,22 @@ const AddToPlaylist: React.FC<props> = ({ songId, songName }) => {
     const playlist = playlists.find(
       (playlist) => playlist.id === event.target.id
     );
-    if (playlist?.songs.find((song) => song.id === songId)) {
+    if (playlist?.songs.find((song) => song.id === selectedSong.id)) {
       setSongExsits(true);
       setOpenAlert(true);
     } else {
       setSongExsits(false);
       addToPlaylist({
         variables: {
-          songId: songId,
+          songId: selectedSong.id,
           playlistId: playlist?.id,
         },
-        onCompleted: (data) => {
-          console.log(data);
+        onCompleted: () => {
+          const updatedPlaylist = {
+            id: playlist?.id,
+            name: playlist?.name,
+            songs: [...playlist!.songs, selectedSong],
+          };
           setOpenAlert(true);
         },
       });
@@ -105,8 +109,8 @@ const AddToPlaylist: React.FC<props> = ({ songId, songName }) => {
           severity={songExists ? ERROR : SUCCESS}
         >
           {songExists
-            ? `${THE_SONG} ${songName} ${SONG_EXISTS} ${chosenPlaylist?.name}`
-            : `${THE_SONG} ${songName} ${ADDED_SUCCESSFULLY} ${chosenPlaylist?.name}`}
+            ? `${THE_SONG} ${selectedSong.song} ${SONG_EXISTS} ${chosenPlaylist?.name}`
+            : `${THE_SONG} ${selectedSong.song} ${ADDED_SUCCESSFULLY} ${chosenPlaylist?.name}`}
           <IconButton
             onClick={() => {
               setOpenAlert(false);
