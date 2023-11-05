@@ -43,9 +43,9 @@ const LogIn: React.FC = () => {
         <div className={classes.page}>
           <Typography className={classes.musifyTitle}>{MUSIFY}</Typography>
           <FormControl className={classes.form}>
-            <InputLabel className={classes.inputLabel}>
+            {/* <InputLabel className={classes.inputLabel}>
               {SELECT_USER}
-            </InputLabel>
+            </InputLabel> */}
             <Select
               className={classes.selectUser}
               inputProps={{ className: classes.selectedUser }}
@@ -55,8 +55,13 @@ const LogIn: React.FC = () => {
                 );
               }}
             >
+              <MenuItem disabled>{SELECT_USER}</MenuItem>
               {users.map((user) => (
-                <MenuItem value={user.id} key={user.id}>
+                <MenuItem
+                  value={user.id}
+                  key={user.id}
+                  className={classes.menuItem}
+                >
                   {user.firstName + ' ' + user.lastName}
                 </MenuItem>
               ))}

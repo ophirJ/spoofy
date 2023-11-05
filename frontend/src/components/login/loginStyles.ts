@@ -85,6 +85,10 @@ const useStyles = makeStyles({
   linkToHome: {
     textDecoration: 'none',
   },
+
+  menuItem: {
+    textAlign: 'right',
+  },
 });
 
 export default useStyles;
