@@ -9,7 +9,7 @@ import { useEffect, useState, useContext } from 'react';
 import { DurationToString } from 'utils/DurationToString';
 import { useAppSelector, useAppDispatch } from 'redux/hooks';
 import { songsContext } from 'context/songsContext';
-import { setSong, setSelectionModel } from 'redux/playingSongSlice';
+import { setSong } from 'redux/playingSongSlice';
 import useStyles from './playlineStyles';
 
 const SONG_DURATION = 235;
@@ -51,14 +51,12 @@ const Playline: React.FC = () => {
     const currentIndex = songs.indexOf(playingSong!);
     const nextSong = songs[currentIndex + 1];
     dispatch(setSong(nextSong));
-    dispatch(setSelectionModel([nextSong.id]));
   };
 
   const SkipPrevious = () => {
     const currentIndex = songs.indexOf(playingSong!);
     const previousSong = songs[currentIndex - 1];
     dispatch(setSong(previousSong));
-    dispatch(setSelectionModel([previousSong.id]));
   };
 
   return (

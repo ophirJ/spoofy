@@ -12,3 +12,14 @@ export const ADD_SONG_TO_PLAYLIST = gql`
     }
   }
 `;
+
+export const CREATE_PLAYLIST = gql`
+  mutation MyMutation($name: String!, $userId: UUID!) {
+    createPlaylist(input: { playlist: { name: $name, userId: $userId } }) {
+      playlist {
+        name
+        id
+      }
+    }
+  }
+`;

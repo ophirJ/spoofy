@@ -1,10 +1,8 @@
 import Typography from '@mui/material/Typography';
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { useState } from 'react';
 import { ThemeProvider } from '@mui/material/styles';
@@ -15,17 +13,20 @@ import { User } from 'src/modules/interfaces/user';
 import { useAppDispatch } from 'redux/hooks';
 import { setUser } from 'redux/currentUserSlice';
 import useStyles from './loginStyles';
-import { rtlTheme, cacheRtl } from 'src/rtlTheme';
+import { rtlTheme, cacheRtl } from 'src/theme';
 
 const MUSIFY = 'Musify';
 const SELECT_USER = 'בחר משתמש להתחברות';
 const LOGIN = 'התחבר';
+const SELECT_USER_VALUE = '-1';
+const HOME_PATH = '/home';
 
 const LogIn: React.FC = () => {
   const classes = useStyles();
   const [selectedUser, setSelectedUser] = useState<User>();
   const [users, setUsers] = useState<User[]>([]);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { data } = useQuery(GET_ALL_USERS, {
     onCompleted: () => {
@@ -35,6 +36,7 @@ const LogIn: React.FC = () => {
 
   const logIn = () => {
     selectedUser && dispatch(setUser(selectedUser));
+    navigate(HOME_PATH);
   };
 
   return (
@@ -42,10 +44,7 @@ const LogIn: React.FC = () => {
       <ThemeProvider theme={rtlTheme}>
         <div className={classes.page}>
           <Typography className={classes.musifyTitle}>{MUSIFY}</Typography>
-          <FormControl className={classes.form}>
-            {/* <InputLabel className={classes.inputLabel}>
-              {SELECT_USER}
-            </InputLabel> */}
+          <div className={classes.form}>
             <Select
               className={classes.selectUser}
               inputProps={{ className: classes.selectedUser }}
@@ -54,8 +53,11 @@ const LogIn: React.FC = () => {
                   users.find((user) => user.id === event.target.value)
                 );
               }}
+              defaultValue={SELECT_USER_VALUE}
             >
-              <MenuItem disabled>{SELECT_USER}</MenuItem>
+              <MenuItem value={SELECT_USER_VALUE} disabled>
+                {SELECT_USER}
+              </MenuItem>
               {users.map((user) => (
                 <MenuItem
                   value={user.id}
@@ -66,12 +68,14 @@ const LogIn: React.FC = () => {
                 </MenuItem>
               ))}
             </Select>
-            <Link to={'/home'} className={classes.linkToHome}>
-              <Button className={classes.loginBtn} onClick={logIn}>
-                {LOGIN}
-              </Button>
-            </Link>
-          </FormControl>
+            <Button
+              className={classes.loginBtn}
+              onClick={logIn}
+              disabled={!selectedUser}
+            >
+              {LOGIN}
+            </Button>
+          </div>
         </div>
       </ThemeProvider>
     </CacheProvider>

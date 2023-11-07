@@ -56,12 +56,12 @@ const useStyles = makeStyles({
   },
 
   form: {
-    '&.MuiFormControl-root': {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      gap: '30px',
-    },
+    // '&.MuiFormControl-root': {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '30px',
+    // },
   },
 
   inputLabel: {

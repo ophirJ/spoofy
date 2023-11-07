@@ -8,6 +8,7 @@ import { Song } from 'modules/interfaces/song';
 import { GET_ALL_SONGS } from 'db/songs/query';
 import { SideMenu } from 'modules/enums/sideMenu';
 import { GET_ALL_PLAYLISTS_BY_USER } from 'db/playlists/query';
+import { Playlist } from 'modules/interfaces/playlist';
 import TopBar from './topBar/topBar';
 import useStyles from './homeStyles';
 import Menu from './menu/menu';

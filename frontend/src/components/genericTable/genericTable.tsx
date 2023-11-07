@@ -1,14 +1,9 @@
-import {
-  DataGridPro,
-  GridRowParams,
-  GridRowSelectionModel,
-  LicenseInfo,
-} from '@mui/x-data-grid-pro';
+import { DataGridPro, GridRowParams, LicenseInfo } from '@mui/x-data-grid-pro';
 import { GridColDef, GridRowsProp } from '@mui/x-data-grid-pro';
 
 import { DurationToString } from 'utils/DurationToString';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
-import { setSong, setSelectionModel } from 'redux/playingSongSlice';
+import { setSong } from 'redux/playingSongSlice';
 import { Song } from 'modules/interfaces/song';
 import AddFavorite from './addFavorite/addFavorite';
 import useStyles from './genericTableStyles';
@@ -23,10 +18,6 @@ interface props {
 }
 
 const GenericTable: React.FC<props> = ({ songs }) => {
-  const selectionModel = useAppSelector(
-    (state) => state.playingSong.selectionModel
-  );
-
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const playingSong = useAppSelector((state) => state.playingSong.song);
@@ -42,6 +33,7 @@ const GenericTable: React.FC<props> = ({ songs }) => {
       headerClassName: classes.songsTable,
       width: 350,
       sortable: false,
+      resizable: false,
     },
     {
       field: 'artist',
@@ -56,6 +48,7 @@ const GenericTable: React.FC<props> = ({ songs }) => {
       headerClassName: classes.songsTable,
       width: 120,
       sortable: false,
+      resizable: false,
     },
     {
       field: 'addToPlaylist',
@@ -63,7 +56,7 @@ const GenericTable: React.FC<props> = ({ songs }) => {
       renderCell: (params) => {
         return (
           <div className={classes.songActions}>
-            <AddToPlaylist selectedSong={params.row} />
+            <AddToPlaylist selectedSong={params.row} songId={params.row.id} />
             <AddFavorite
               isFavorite={params.row.isFavorite}
               songID={String(params.id)}
@@ -75,14 +68,6 @@ const GenericTable: React.FC<props> = ({ songs }) => {
       sortable: false,
     },
   ];
-
-  const changeSelectionMode = (newSelectionModel: GridRowSelectionModel) => {
-    if (newSelectionModel[0] === selectionModel[0]) {
-      dispatch(setSelectionModel([]));
-    } else {
-      dispatch(setSelectionModel(newSelectionModel));
-    }
-  };
 
   const selectSong = (params: GridRowParams) => {
     dispatch(
@@ -118,10 +103,7 @@ const GenericTable: React.FC<props> = ({ songs }) => {
         disableColumnResize
         hideFooter
         onRowClick={(params) => selectSong(params)}
-        onRowSelectionModelChange={(newSelectionModel) =>
-          changeSelectionMode(newSelectionModel)
-        }
-        rowSelectionModel={selectionModel}
+        rowSelectionModel={playingSong ? playingSong.id : undefined}
       />
     </div>
   );

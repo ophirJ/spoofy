@@ -6,6 +6,7 @@ import { Typography } from '@mui/material';
 import GenericTable from '../genericTable/genericTable';
 import useStyles from './playlistsTableStyles';
 import { playlistsContext } from 'src/context/playlistsContext';
+import CreatePlaylistDialog from './createPlaylist/createPlaylistDialog';
 
 const PlaylistsTable: React.FC = () => {
   const classes = useStyles();
@@ -28,6 +29,7 @@ const PlaylistsTable: React.FC = () => {
           </div>
         ))}
       </div>
+      <CreatePlaylistDialog />
     </div>
   );
 };

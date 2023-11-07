@@ -1,7 +1,7 @@
 import { makeStyles } from '@mui/styles';
 
 const useStyles = makeStyles({
-  grayCreateSongBtn: {
+  grayCreateBtn: {
     '&.MuiButton-root': {
       '&:hover': {
         backgroundColor: 'rgb(185, 172, 172)',

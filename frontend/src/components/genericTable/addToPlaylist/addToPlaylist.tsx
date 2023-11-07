@@ -13,6 +13,8 @@ import { ADD_SONG_TO_PLAYLIST } from 'db/playlists/mutation';
 import useStyles from './addToPlaylistStyles';
 import { Playlist } from 'src/modules/interfaces/playlist';
 import { Song } from 'src/modules/interfaces/song';
+import { StringToNumberDuration } from 'src/utils/StringToNumberDuration';
+import { songsContext } from 'src/context/songsContext';
 
 const ADD_TO_PLAYLIST = 'הוסף לפלייליסט';
 const THE_SONG = 'השיר';
@@ -23,16 +25,19 @@ const SUCCESS = 'success';
 
 interface props {
   selectedSong: Song;
+  songId: string;
 }
 
-const AddToPlaylist: React.FC<props> = ({ selectedSong }) => {
+const AddToPlaylist: React.FC<props> = ({ songId }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const { playlists } = useContext(playlistsContext);
+  const { playlists, setPlaylists } = useContext(playlistsContext);
   const [addToPlaylist] = useMutation(ADD_SONG_TO_PLAYLIST);
   const [openAlert, setOpenAlert] = useState<boolean>(false);
   const [songExists, setSongExsits] = useState<boolean>(false);
   const [chosenPlaylist, setChosenPlaylist] = useState<Playlist>();
+  const { songs } = useContext(songsContext);
+  const selectedSong = songs.find((song) => song.id === songId);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event?.stopPropagation();
@@ -51,22 +56,27 @@ const AddToPlaylist: React.FC<props> = ({ selectedSong }) => {
     const playlist = playlists.find(
       (playlist) => playlist.id === event.target.id
     );
-    if (playlist?.songs.find((song) => song.id === selectedSong.id)) {
+    if (playlist?.songs.find((song) => song.id === songId)) {
       setSongExsits(true);
       setOpenAlert(true);
     } else {
       setSongExsits(false);
       addToPlaylist({
         variables: {
-          songId: selectedSong.id,
+          songId: songId,
           playlistId: playlist?.id,
         },
         onCompleted: () => {
-          const updatedPlaylist = {
-            id: playlist?.id,
-            name: playlist?.name,
-            songs: [...playlist!.songs, selectedSong],
-          };
+          setPlaylists!((prev) =>
+            prev.map((currentPlaylist) => {
+              if (currentPlaylist.id === playlist?.id) {
+                currentPlaylist.songs.push(selectedSong!);
+                return currentPlaylist;
+              } else {
+                return currentPlaylist;
+              }
+            })
+          );
           setOpenAlert(true);
         },
       });
@@ -109,8 +119,8 @@ const AddToPlaylist: React.FC<props> = ({ selectedSong }) => {
           severity={songExists ? ERROR : SUCCESS}
         >
           {songExists
-            ? `${THE_SONG} ${selectedSong.song} ${SONG_EXISTS} ${chosenPlaylist?.name}`
-            : `${THE_SONG} ${selectedSong.song} ${ADDED_SUCCESSFULLY} ${chosenPlaylist?.name}`}
+            ? `${THE_SONG} ${selectedSong?.name} ${SONG_EXISTS} ${chosenPlaylist?.name}`
+            : `${THE_SONG} ${selectedSong?.name} ${ADDED_SUCCESSFULLY} ${chosenPlaylist?.name}`}
           <IconButton
             onClick={() => {
               setOpenAlert(false);
