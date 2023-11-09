@@ -6,18 +6,20 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Slider from '@mui/material/Slider';
 import { useEffect, useState, useContext } from 'react';
 
+import { DurationToString } from 'utils/DurationToString';
+import { useAppSelector, useAppDispatch } from 'redux/hooks';
+import { songsContext } from 'context/songsContext';
+import { setSong } from 'redux/playingSongSlice';
 import useStyles from './playlineStyles';
-import { DurationToString } from '../../DurationToString';
-import { useAppSelector, useAppDispatch } from '../../redux/hooks';
-import { songsContext } from '../context/songsContext';
-import { setSong, setSelectionModel } from '../../redux/playingSongSlice';
 
-const SONG_DURATION: number = 235;
+const SONG_DURATION = 235;
 
 const Playline: React.FC = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [lastSong, setLastSong] = useState<boolean>(false);
+  const [firstSong, setFirstSong] = useState<boolean>(false);
   const [songDuration, setSongDuration] = useState<number>(0);
   const playingSong = useAppSelector((state) => state.playingSong.song);
   const { songs } = useContext(songsContext);
@@ -33,6 +35,9 @@ const Playline: React.FC = () => {
 
   useEffect(() => {
     setSongDuration(0);
+    const currentIndex = songs.indexOf(playingSong!);
+    setLastSong(currentIndex === songs.length - 1);
+    setFirstSong(currentIndex === 0);
   }, [playingSong]);
 
   useEffect(() => {
@@ -46,14 +51,12 @@ const Playline: React.FC = () => {
     const currentIndex = songs.indexOf(playingSong!);
     const nextSong = songs[currentIndex + 1];
     dispatch(setSong(nextSong));
-    dispatch(setSelectionModel([nextSong.id]));
   };
 
   const SkipPrevious = () => {
     const currentIndex = songs.indexOf(playingSong!);
     const previousSong = songs[currentIndex - 1];
     dispatch(setSong(previousSong));
-    dispatch(setSelectionModel([previousSong.id]));
   };
 
   return (
@@ -64,7 +67,7 @@ const Playline: React.FC = () => {
           <span className={classes.artistName}>{playingSong?.artistName}</span>
         </div>
         <div className={classes.controlIcons}>
-          <IconButton onClick={skipForward}>
+          <IconButton onClick={skipForward} disabled={lastSong}>
             <SkipNextIcon className={classes.icon} />
           </IconButton>
           <IconButton onClick={() => setIsPlaying((prev) => !prev)}>
@@ -74,7 +77,7 @@ const Playline: React.FC = () => {
               <PlayArrowIcon className={classes.icon} />
             )}
           </IconButton>
-          <IconButton onClick={SkipPrevious}>
+          <IconButton onClick={SkipPrevious} disabled={firstSong}>
             <SkipPreviousIcon className={classes.icon} />
           </IconButton>
         </div>

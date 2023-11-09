@@ -1,19 +1,13 @@
-import {
-  DataGridPro,
-  GridRowParams,
-  GridRowSelectionModel,
-  LicenseInfo,
-} from '@mui/x-data-grid-pro';
+import { DataGridPro, GridRowParams, LicenseInfo } from '@mui/x-data-grid-pro';
 import { GridColDef, GridRowsProp } from '@mui/x-data-grid-pro';
-import AddIcon from '@mui/icons-material/Add';
-import IconButton from '@mui/material/IconButton';
 
-import { DurationToString } from '../../DurationToString';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
-import { setSong, setSelectionModel } from '../../redux/playingSongSlice';
-import AddFavorite from '../addFavorite/addFavorite';
-import { Song } from '../../types/song';
+import { DurationToString } from 'utils/DurationToString';
+import { useAppDispatch, useAppSelector } from 'redux/hooks';
+import { setSong } from 'redux/playingSongSlice';
+import { Song } from 'modules/interfaces/song';
+import AddFavorite from './addFavorite/addFavorite';
 import useStyles from './genericTableStyles';
+import AddToPlaylist from './addToPlaylist/addToPlaylist';
 
 const SONG = 'שיר';
 const ARTIST = 'זמר';
@@ -24,10 +18,6 @@ interface props {
 }
 
 const GenericTable: React.FC<props> = ({ songs }) => {
-  const selectionModel = useAppSelector(
-    (state) => state.playingSong.selectionModel
-  );
-
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const playingSong = useAppSelector((state) => state.playingSong.song);
@@ -42,72 +32,66 @@ const GenericTable: React.FC<props> = ({ songs }) => {
       headerName: SONG,
       headerClassName: classes.songsTable,
       width: 350,
+      sortable: false,
+      resizable: false,
     },
     {
       field: 'artist',
       headerName: ARTIST,
       headerClassName: classes.songsTable,
       width: 260,
+      sortable: false,
     },
     {
       field: 'duration',
       headerName: DURATION,
       headerClassName: classes.songsTable,
       width: 120,
+      sortable: false,
+      resizable: false,
     },
     {
       field: 'addToPlaylist',
       headerName: '',
-      renderCell: () => {
-        return (
-          <IconButton className={classes.icons}>
-            <AddIcon />
-          </IconButton>
-        );
-      },
-      width: 30,
-    },
-    {
-      field: 'addToFavorites',
-      headerName: '',
       renderCell: (params) => {
         return (
-          <AddFavorite
-            isFavorite={params.row.isFavorite}
-            songID={String(params.id)}
-          />
+          <div className={classes.songActions}>
+            <AddToPlaylist selectedSong={params.row} songId={params.row.id} />
+            <AddFavorite
+              isFavorite={params.row.isFavorite}
+              songID={String(params.id)}
+            />
+          </div>
         );
       },
-      width: 30,
+      width: 100,
+      sortable: false,
     },
   ];
 
-  const changeSelectionMode = (newSelectionModel: GridRowSelectionModel) => {
-    if (newSelectionModel[0] === selectionModel[0]) {
-      dispatch(setSelectionModel([]));
-    } else {
-      dispatch(setSelectionModel(newSelectionModel));
-    }
+  const selectSong = (params: GridRowParams) => {
+    dispatch(
+      setSong(
+        playingSong?.id !== params.id
+          ? songs.find((song) => song.id === params.id)
+          : undefined
+      )
+    );
   };
 
-  const selectSong = (params: GridRowParams<any>) => {
-    let song;
-    playingSong?.id == params.id
-      ? (song = undefined)
-      : (song = songs.find((song) => song.id == params.id));
-    dispatch(setSong(song));
-  };
-
-  const rows: GridRowsProp[] = [];
-  songs.map((song) =>
-    rows.push({
-      id: song.id,
-      song: song.name,
-      artist: song.artistName,
-      duration: DurationToString(song.duration),
-      isFavorite: song.isFavorite,
-    })
-  );
+  const rows: {
+    id: string;
+    song: string;
+    artist: string;
+    duration: string;
+    isFavorite: boolean | undefined;
+  }[] = songs.map((song) => ({
+    id: song.id,
+    song: song.name,
+    artist: song.artistName,
+    duration: DurationToString(song.duration),
+    isFavorite: song.isFavorite,
+  }));
 
   return (
     <div className={classes.tableContainer}>
@@ -116,12 +100,10 @@ const GenericTable: React.FC<props> = ({ songs }) => {
         rows={rows}
         columns={columns}
         disableColumnMenu
+        disableColumnResize
         hideFooter
         onRowClick={(params) => selectSong(params)}
-        onRowSelectionModelChange={(newSelectionModel) =>
-          changeSelectionMode(newSelectionModel)
-        }
-        rowSelectionModel={selectionModel}
+        rowSelectionModel={playingSong ? playingSong.id : undefined}
       />
     </div>
   );
