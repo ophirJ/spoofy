@@ -8,8 +8,9 @@ import GenericDialog from 'components/genericDialog/genericDialog';
 import GenericTextField from 'components/genericDialog/genericTextField/genericTextField';
 import GenericAutoComplete from 'components/genericDialog/genericAutoComplete/genericAutoComplete';
 import { songsContext } from 'context/songsContext';
+import { Playlist } from 'modules/interfaces/playlist';
 import { createPlaylistSchema } from '../createPlaylist/playlistSchema';
-import useStyles from './editPlaylistStyles';
+import useStyles from './editPlaylistDialogStyles';
 
 const SAVE = 'שמור';
 const DIALOG_TITLE = 'עריכת פלייליסט';
@@ -18,14 +19,18 @@ const SONGS = 'שירים';
 const NAME_FIELD = 'playlistName';
 const SONGS_FIELD = 'songs';
 
-const EditPlaylist: React.FC = () => {
+interface props {
+  currentPlaylist: Playlist;
+}
+
+const EditPlaylist: React.FC<props> = ({ currentPlaylist }) => {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const { songs } = useContext(songsContext);
 
   const defaultValues = {
-    playlistName: '',
-    songs: [],
+    playlistName: currentPlaylist.name,
+    songs: currentPlaylist.songs.map((song) => song.name),
   };
 
   const methods = useForm({
