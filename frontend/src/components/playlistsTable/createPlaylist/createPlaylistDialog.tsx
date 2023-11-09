@@ -2,7 +2,6 @@ import Button from '@mui/material/Button';
 import { useContext, useState } from 'react';
 import { FieldValues, useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Typography from '@mui/material/Typography';
 import { useMutation } from '@apollo/client';
 
 import { CREATE_PLAYLIST, ADD_SONG_TO_PLAYLIST } from 'db/playlists/mutation';

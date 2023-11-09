@@ -16,13 +16,6 @@ const useStyles = makeStyles({
       borderRadius: '20px',
     },
   },
-
-  dialogActions: {
-    '&.MuiDialogActions-root': {
-      display: 'flex',
-      justifyContent: 'center',
-    },
-  },
 });
 
 export default useStyles;

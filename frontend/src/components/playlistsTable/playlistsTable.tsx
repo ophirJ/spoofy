@@ -7,6 +7,7 @@ import GenericTable from '../genericTable/genericTable';
 import useStyles from './playlistsTableStyles';
 import { playlistsContext } from 'src/context/playlistsContext';
 import CreatePlaylistDialog from './createPlaylist/createPlaylistDialog';
+import EditPlaylist from './editPlaylist/editPlaylist';
 
 const PlaylistsTable: React.FC = () => {
   const classes = useStyles();
@@ -21,9 +22,10 @@ const PlaylistsTable: React.FC = () => {
               <Typography className={classes.playlistName}>
                 {playlist.name}
               </Typography>
-              <IconButton>
+              {/* <IconButton>
                 <EditIcon className={classes.editIcon} />
-              </IconButton>
+              </IconButton> */}
+              <EditPlaylist />
             </div>
             <GenericTable songs={playlist.songs} />
           </div>
