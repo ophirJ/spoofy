@@ -22,7 +22,11 @@ const GenericTextField: React.FC<props> = ({
       <Controller
         name={fieldName}
         render={({ field }) => (
-          <TextField {...field} className={classes.TextField}></TextField>
+          <TextField
+            {...field}
+            className={classes.TextField}
+            autoComplete={false}
+          ></TextField>
         )}
       />
       <Typography className={classes.errorMessage}>{errorMessage}</Typography>
