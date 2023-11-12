@@ -62,6 +62,7 @@ const Home: React.FC = () => {
     },
     onCompleted: (data) => {
       const playlistsDB = data.allPlaylists.nodes;
+      console.log(playlistsDB);
 
       playlistsDB.map(
         (playlist: {
@@ -75,6 +76,7 @@ const Home: React.FC = () => {
               name: song.songBySongId.name,
               duration: song.songBySongId.duration,
               artistName: song.songBySongId.artistByArtistId.name,
+              isFavorite: song.songBySongId.favoritesBySongId.totalCount === 1,
             })
           );
           setPlaylists((prev) => [

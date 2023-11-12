@@ -15,6 +15,9 @@ export const GET_ALL_PLAYLISTS_BY_USER = gql`
               artistByArtistId {
                 name
               }
+              favoritesBySongId {
+                totalCount
+              }
             }
           }
         }

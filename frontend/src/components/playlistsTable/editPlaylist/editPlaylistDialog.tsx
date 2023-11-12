@@ -9,6 +9,7 @@ import GenericDialog from 'components/genericDialog/genericDialog';
 import GenericTextField from 'components/genericDialog/genericTextField/genericTextField';
 import GenericAutoComplete from 'components/genericDialog/genericAutoComplete/genericAutoComplete';
 import { songsContext } from 'context/songsContext';
+import { playlistsContext } from 'context/playlistsContext';
 import { Playlist } from 'modules/interfaces/playlist';
 import { Song } from 'modules/interfaces/song';
 import {
@@ -18,7 +19,6 @@ import {
 } from 'db/playlists/mutation';
 import { createPlaylistSchema } from '../createPlaylist/playlistSchema';
 import useStyles from './editPlaylistDialogStyles';
-import { string } from 'yup';
 
 const SAVE = 'שמור';
 const DIALOG_TITLE = 'עריכת פלייליסט';
@@ -35,6 +35,7 @@ const EditPlaylist: React.FC<props> = ({ currentPlaylist }) => {
   const classes = useStyles();
   const [openDialog, setOpenDialog] = useState<boolean>(false);
   const { songs } = useContext(songsContext);
+  const { setPlaylists } = useContext(playlistsContext);
   const [updatePlaylist] = useMutation(UPDATE_PLAYLIST);
   const [addSongToPlaylist] = useMutation(ADD_SONG_TO_PLAYLIST);
   const [deleteSongFromPlaylist] = useMutation(DELETE_SONG_FROM_PLAYLIST);
@@ -43,6 +44,7 @@ const EditPlaylist: React.FC<props> = ({ currentPlaylist }) => {
     playlistName: currentPlaylist.name,
     songs: currentPlaylist.songs.map((song) => song.name),
   };
+  console.log(currentPlaylist);
 
   const methods = useForm({
     resolver: yupResolver(createPlaylistSchema),
@@ -60,18 +62,58 @@ const EditPlaylist: React.FC<props> = ({ currentPlaylist }) => {
       songs.find((song) => song.name === songData)
     );
     updatedSongs.map((newSong) => {
-      !currentPlaylist.songs.includes(newSong) &&
+      !currentPlaylist.songs.find((song) => song.id === newSong.id) &&
         addSongToPlaylist({
           variables: { playlistId: currentPlaylist.id, songId: newSong.id },
+          onCompleted() {
+            setPlaylists!((prev) =>
+              prev.map((playlist) => {
+                if (playlist.id === currentPlaylist.id) {
+                  return { ...playlist, songs: updatedSongs };
+                }
+                return playlist;
+              })
+            );
+          },
         });
     });
     updatePlaylist({
       variables: { id: currentPlaylist.id, name: data.playlistName },
+      onCompleted(data) {
+        const updatedPlaylist = data.updatePlaylistById.playlist;
+        setPlaylists!((prev) =>
+          prev.map((playlist) => {
+            if (playlist.id === updatedPlaylist.id) {
+              return { ...playlist, name: updatedPlaylist.name };
+            }
+            return playlist;
+          })
+        );
+      },
     });
     currentPlaylist.songs.map((song) => {
-      !updatedSongs.includes(song) &&
+      !updatedSongs.find((newSong) => newSong.id === song.id) &&
         deleteSongFromPlaylist({
           variables: { songId: song.id, playlistId: currentPlaylist.id },
+          onCompleted(data) {
+            console.log(data);
+            const playlistId =
+              data.deleteSongPlaylistBySongIdAndPlaylistId.songPlaylist
+                .playlistId;
+            const songId =
+              data.deleteSongPlaylistBySongIdAndPlaylistId.songPlaylist.songId;
+            setPlaylists!((prev) =>
+              prev.map((playlist) => {
+                if (playlist.id === playlistId) {
+                  return {
+                    ...playlist,
+                    songs: playlist.songs.filter((song) => song.id === songId),
+                  };
+                }
+                return playlist;
+              })
+            );
+          },
         });
     });
   };
