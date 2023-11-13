@@ -1,6 +1,6 @@
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@apollo/client';
@@ -10,8 +10,8 @@ import GenericTextField from 'components/genericDialog/genericTextField/genericT
 import GenericAutoComplete from 'components/genericDialog/genericAutoComplete/genericAutoComplete';
 import { songsContext } from 'context/songsContext';
 import { playlistsContext } from 'context/playlistsContext';
-import { Playlist } from 'modules/interfaces/playlist';
-import { Song } from 'modules/interfaces/song';
+import { Playlist } from 'src/models/interfaces/playlist';
+import { Song } from 'src/models/interfaces/song';
 import {
   UPDATE_PLAYLIST,
   ADD_SONG_TO_PLAYLIST,
@@ -44,12 +44,15 @@ const EditPlaylist: React.FC<props> = ({ currentPlaylist }) => {
     playlistName: currentPlaylist.name,
     songs: currentPlaylist.songs.map((song) => song.name),
   };
-  console.log(currentPlaylist);
 
   const methods = useForm({
     resolver: yupResolver(createPlaylistSchema),
     defaultValues: defaultValues,
   });
+
+  useEffect(() => {
+    methods.reset(defaultValues);
+  }, [currentPlaylist]);
 
   const onSubmitHandler = (data: FieldValues) => {
     methods.reset();
@@ -96,7 +99,6 @@ const EditPlaylist: React.FC<props> = ({ currentPlaylist }) => {
         deleteSongFromPlaylist({
           variables: { songId: song.id, playlistId: currentPlaylist.id },
           onCompleted(data) {
-            console.log(data);
             const playlistId =
               data.deleteSongPlaylistBySongIdAndPlaylistId.songPlaylist
                 .playlistId;
@@ -107,7 +109,7 @@ const EditPlaylist: React.FC<props> = ({ currentPlaylist }) => {
                 if (playlist.id === playlistId) {
                   return {
                     ...playlist,
-                    songs: playlist.songs.filter((song) => song.id === songId),
+                    songs: playlist.songs.filter((song) => song.id !== songId),
                   };
                 }
                 return playlist;

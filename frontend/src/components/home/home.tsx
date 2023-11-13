@@ -4,11 +4,11 @@ import Typography from '@mui/material/Typography';
 
 import { songsContext } from 'context/songsContext';
 import { playlistsContext } from 'context/playlistsContext';
-import { Song } from 'modules/interfaces/song';
+import { Song } from 'src/models/interfaces/song';
 import { GET_ALL_SONGS } from 'db/songs/query';
-import { SideMenu } from 'modules/enums/sideMenu';
+import { SideMenu } from 'src/models/enums/sideMenu';
 import { GET_ALL_PLAYLISTS_BY_USER } from 'db/playlists/query';
-import { Playlist } from 'modules/interfaces/playlist';
+import { Playlist } from 'src/models/interfaces/playlist';
 import TopBar from './topBar/topBar';
 import useStyles from './homeStyles';
 import Menu from './menu/menu';
@@ -62,8 +62,6 @@ const Home: React.FC = () => {
     },
     onCompleted: (data) => {
       const playlistsDB = data.allPlaylists.nodes;
-      console.log(playlistsDB);
-
       playlistsDB.map(
         (playlist: {
           songPlaylistsByPlaylistId: { nodes: any[] };

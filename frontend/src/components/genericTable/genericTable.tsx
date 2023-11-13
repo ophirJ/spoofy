@@ -4,7 +4,7 @@ import { GridColDef, GridRowsProp } from '@mui/x-data-grid-pro';
 import { DurationToString } from 'utils/DurationToString';
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { setSong } from 'redux/playingSongSlice';
-import { Song } from 'modules/interfaces/song';
+import { Song } from 'src/models/interfaces/song';
 import AddFavorite from './addFavorite/addFavorite';
 import useStyles from './genericTableStyles';
 import AddToPlaylist from './addToPlaylist/addToPlaylist';
@@ -22,9 +22,7 @@ const GenericTable: React.FC<props> = ({ songs }) => {
   const dispatch = useAppDispatch();
   const playingSong = useAppSelector((state) => state.playingSong.song);
 
-  LicenseInfo.setLicenseKey(
-    '6239d8e4e4e446a3d208d638ff7603bdT1JERVI6Um9tLVRlc3QsRVhQSVJZPTIyMjMwNjEyMDAwMDAsS0VZVkVSU0lPTj0x'
-  );
+  LicenseInfo.setLicenseKey(import.meta.env.VITE_LICENSE_KEY);
 
   const columns: GridColDef[] = [
     {

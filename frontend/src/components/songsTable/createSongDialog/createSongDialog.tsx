@@ -8,11 +8,11 @@ import { useForm, Controller, FieldValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { GET_ALL_ARTISTS } from 'db/artists/query';
-import { Artist } from 'modules/interfaces/artist';
+import { Artist } from 'src/models/interfaces/artist';
 import { CREATE_SONG } from 'db/songs/mutation';
 import { songsContext } from 'context/songsContext';
 import { StringToNumberDuration } from 'utils/StringToNumberDuration';
-import { Song } from 'modules/interfaces/song';
+import { Song } from 'src/models/interfaces/song';
 import GenericDialog from 'src/components/genericDialog/genericDialog';
 import GenericTextField from 'components/genericDialog/genericTextField/genericTextField';
 import GenericAutoComplete from 'components/genericDialog/genericAutoComplete/genericAutoComplete';

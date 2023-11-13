@@ -21,6 +21,9 @@ const useStyles = makeStyles({
         width: '95%',
       },
     },
+    '&.css-kzyyzb-MuiDataGrid-root .MuiDataGrid-iconSeparator': {
+      visibility: 'hidden',
+    },
     '&.css-kzyyzb-MuiDataGrid-root .MuiDataGrid-row.Mui-selected': {
       backgroundColor: 'rgb(129, 129, 129)',
     },

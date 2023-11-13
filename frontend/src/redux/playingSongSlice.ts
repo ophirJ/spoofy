@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
-import { Song } from '../modules/interfaces/song';
+import { Song } from '../models/interfaces/song';
 
 interface playingSong {
   song: Song | undefined;

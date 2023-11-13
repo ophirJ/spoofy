@@ -11,8 +11,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { playlistsContext } from 'context/playlistsContext';
 import { ADD_SONG_TO_PLAYLIST } from 'db/playlists/mutation';
 import useStyles from './addToPlaylistStyles';
-import { Playlist } from 'src/modules/interfaces/playlist';
-import { Song } from 'src/modules/interfaces/song';
+import { Playlist } from 'src/models/interfaces/playlist';
+import { Song } from 'src/models/interfaces/song';
 import { StringToNumberDuration } from 'src/utils/StringToNumberDuration';
 import { songsContext } from 'src/context/songsContext';
 

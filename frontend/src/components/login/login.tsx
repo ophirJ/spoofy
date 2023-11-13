@@ -9,7 +9,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { CacheProvider } from '@emotion/react';
 
 import { GET_ALL_USERS } from 'db/users/query';
-import { User } from 'src/modules/interfaces/user';
+import { User } from 'src/models/interfaces/user';
 import { useAppDispatch } from 'redux/hooks';
 import { setUser } from 'redux/currentUserSlice';
 import useStyles from './loginStyles';

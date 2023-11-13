@@ -11,7 +11,7 @@ import { playlistsContext } from 'context/playlistsContext';
 import GenericTextField from 'components/genericDialog/genericTextField/genericTextField';
 import GenericAutoComplete from 'components/genericDialog/genericAutoComplete/genericAutoComplete';
 import { useAppSelector } from 'redux/hooks';
-import { Song } from 'modules/interfaces/song';
+import { Song } from 'src/models/interfaces/song';
 import useStyles from './createPlaylistDialogStyles';
 import { createPlaylistSchema } from './playlistSchema';
 
